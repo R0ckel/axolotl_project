@@ -72,7 +72,7 @@ i {
     margin-top: 10px;
 }
 
-@media (max-width: 580px) {
+@media (max-width: 579px) {
     #main-grid {
         margin: 50px auto 12px;
         display: grid;
@@ -140,7 +140,7 @@ i {
         width: 220px !important;
     }
 }
-@media (min-width: 580px) and (max-width: 950px) {
+@media (min-width: 580px) and (max-width: 949px) {
     #main-grid {
         margin: 50px auto 12px;
         display: grid;
@@ -153,6 +153,10 @@ i {
 
     .heading-small {
         font-size: 70%;
+    }
+
+    input[type="email"] {
+        width: 250px !important;
     }
 
     .main-grid__item3 {
@@ -204,7 +208,7 @@ i {
         grid-template-rows: 1fr 30px 1fr 30px;
         grid-row-gap: 20px;
         grid-column-gap: 23px;
-        margin: 5px auto 20px;
+        margin: 5px auto 30px;
     }
     #main-grid__creators > button {
         margin-top: 0 !important;
