@@ -28,7 +28,23 @@
         </div>
         <div id="container__item2">
             <form>
-                <input type="submit" value="Sybmit">
+                <div>
+                    <input type="text" name="login" placeholder="Login" required><span data-tooltip="Use only latin characters and numbers. Min: 4, max: 16." data-flow="right">?</span>
+                    <input type="email" name="email" placeholder="E-mail" required><span data-tooltip="Enter real email." data-flow="right">?</span>
+                    <input type="password" name="password" placeholder="Password" required><span data-tooltip="Use only latin characters, numbers, *, -, ., @, _. Min: 8, max: 20." data-flow="right">?</span>
+                    <input type="password" name="password2" placeholder="Repeat your password" required><span data-tooltip="Must be the same as password." data-flow="right">?</span>
+                </div>
+                <div>
+                    <input type="text" name="first-name" placeholder="First Name" required><span data-tooltip="Use only latin. Min: 3, max: 12." data-flow="right">?</span>
+                    <input type="text" name="last-name" placeholder="Last Name" required><span data-tooltip="Use only latin. Min: 3, max: 12." data-flow="right">?</span>
+                    <input type="date" name="date"><span data-tooltip="Dont use future date." data-flow="right">?</span><br>
+
+                    <label><input type="radio" name="gender" value="male" required>Male</label>
+                    <label><input type="radio" name="gender" value="female" required>Female</label>
+                    <label><input type="radio" name="gender" value="n/a" required>N/a</label><br>
+                </div>
+                <label><input name="terms" type="checkbox" checked required> I agree to the terms and conditions as set out by the user agreement.</label>
+                <input type="submit" value="Sign Up">
             </form>
         </div>
     </div>
