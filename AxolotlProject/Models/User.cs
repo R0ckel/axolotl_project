@@ -9,6 +9,7 @@
         public string UserSurname { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        public string Status { get; set; }
         public bool IsBanned { get; set; }
         //File Icon { get; set; } //need to save user`s icon. File - static class.
 
@@ -22,8 +23,8 @@
             UserName = userName;
         }
         public User(Guid id, string login, string passwordHash, string userName,
-            string userSurname, string email, string phoneNumber, bool isBanned,
-            DateTime birthDate, UserSex userSex)
+            string userSurname, string email, string phoneNumber, string status,
+            bool isBanned, DateTime birthDate, UserSex userSex)
         {
             Id = id;
             Login = login;
@@ -35,6 +36,7 @@
             IsBanned = isBanned;
             BirthDate = birthDate;
             Sex = userSex;
+            Status = status;
         }
     }
 }
