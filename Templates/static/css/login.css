@@ -1,0 +1,322 @@
+:root {
+    --main-color: #ff5d55;
+    --block-color: #EBEBEB;
+    --black-color: #000000;
+    --input-color: #EDEDEE;
+    --white-color: #FFFFFF;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 95vh;
+    margin: -20px 0 50px;
+    background-image: url("../img/axolotl.jpg");
+    background-repeat: repeat;
+    background-position: center;
+}
+form {
+    background-color: var(--white-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+}
+input {
+    background-color: var(--input-color);
+    border: none;
+    border-radius: 30px;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+}
+.container {
+    background-color: var(--block-color);
+    border-radius: 30px;
+    box-shadow: 4px 3px 6px -1px rgba(158, 158, 158, 0.39);
+    position: relative;
+    overflow: hidden;
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+}
+.container__welcoming {
+    left: 0;
+    width: 45%;
+}
+.container__login {
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+}
+.overlay__left {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+}
+.container__login {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    right: 0;
+    width: 50%;
+}
+span.header {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 30px;
+    font-weight: bolder;
+}
+span.text {
+    display: block;
+    padding: 5px;
+}
+button {
+    border: none;
+    padding: 10px 4px 10px;
+    background-color: var(--main-color);
+    display: inline-block;
+    border-radius: 16px;
+    width: 200px;
+    margin-top: 10px;
+    cursor: pointer;
+    box-shadow: 2px 5px 7px 1px rgba(158,158,158,0.53);
+}
+a.forgot-pwd, a.forgot-pwd:visited {
+    float: right;
+    color: var(--black-color);
+}
+div.forgot-pwd {
+    width: 100%;
+    position: relative;
+}
+a.forgot-pwd:hover {
+    color: var(--main-color);
+}
+i {
+    font-size: 34px;
+    color: var(--black-color);
+}
+@media (min-width: 580px) and (max-width: 750px) {
+    button {
+        width: 150px;
+    }
+    span.header {
+        font-size: 25px;
+    }
+    .container {
+        box-shadow: 4px 3px 4px 4px rgba(158, 158, 158, 0.39);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 95vh;
+        width: 90vw;
+        margin-top: 20px;
+    }
+    .container__welcoming {
+        top: 50%;
+        bottom: 0;
+        width: 100%;
+        height: 50%;
+    }
+    .container__login {
+        top: 50%;
+        bottom: 0;
+        width: 100%;
+        height: 50%;
+        position: absolute;
+    }
+    .overlay__left {
+        top: 50%;
+        bottom: 0;
+        height: 50%;
+        width: 100%;
+    }
+    .container__login {
+        position: absolute;
+        height: 50%;
+        top: 0;
+        width: 100%;
+    }
+}
+@media (min-width: 400px) and (max-width: 580px) {
+    button {
+        width: 150px;
+    }
+    span.header {
+        font-size: 25px;
+    }
+    .container {
+        box-shadow: 4px 3px 4px 4px rgba(158, 158, 158, 0.39);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 95vh;
+        width: 90vw;
+        margin-top: 40px;
+    }
+    .container__welcoming {
+        top: 50%;
+        bottom: 0;
+        width: 100%;
+        height: 50%;
+    }
+    .container__login {
+        top: 50%;
+        bottom: 0;
+        width: 100%;
+        height: 50%;
+        position: absolute;
+    }
+    .overlay__left {
+        top: 50%;
+        bottom: 0;
+        height: 50%;
+        width: 100%;
+    }
+    .container__login {
+        position: absolute;
+        height: 50%;
+        top: 0;
+        width: 100%;
+    }
+}
+@media (min-width: 300px) and (max-width: 400px) {
+
+    span.header {
+        font-size: 22px;
+    }
+    .container {
+        box-shadow: 4px 3px 4px 4px rgba(158, 158, 158, 0.39);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 95vh;
+        width: 90vw;
+        margin-top: 30px;
+    }
+    .container__welcoming {
+        top: 50%;
+        bottom: 0;
+        width: 100%;
+        height: 50%;
+    }
+    .container__login {
+        top: 50%;
+        bottom: 0;
+        width: 100%;
+        height: 50%;
+        position: absolute;
+    }
+    .overlay__left {
+        top: 50%;
+        bottom: 0;
+        height: 50%;
+        width: 100%;
+    }
+    .container__login {
+        position: absolute;
+        height: 50%;
+        top: 0;
+        width: 100%;
+    }
+    i {
+        font-size: 30px;
+    }
+    input {
+        background-color: var(--input-color);
+        border: none;
+        padding: 8px 10px;
+        margin: 6px 0;
+        width: 100%;
+    }
+    .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: row;
+        position: relative;
+        width: 100%;
+    }
+    button:not(.login_btn) {
+        top: 0;
+        width: 110px;
+        height: 50px;
+    }
+}
+@media (max-width: 300px) {
+    span.header {
+        font-size: 18px;
+    }
+    .container {
+        box-shadow: 4px 4px 4px 4px rgba(158, 158, 158, 0.39);
+        height: 90vh;
+        width: 90vw;
+        margin-top: 40px;
+        font-size: 14px;
+    }
+    .container__welcoming {
+        top: 50%;
+        bottom: 0;
+        width: 100%;
+        height: 50%;
+    }
+    .container__login {
+        top: 50%;
+        bottom: 0;
+        width: 100%;
+        height: 50%;
+        position: absolute;
+    }
+    .overlay__left {
+        top: 50%;
+        bottom: 0;
+        height: 50%;
+        width: 100%;
+    }
+    .container__login {
+        position: absolute;
+        height: 50%;
+        top: 0;
+        width: 100%;
+    }
+    i {
+        font-size: 25px;
+    }
+    input {
+        background-color: var(--input-color);
+        border: none;
+        padding: 6px 10px;
+        margin: 6px 0;
+        width: 100%;
+    }
+    .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: row;
+        position: relative;
+        width: 100%;
+    }
+    button:not(.login_btn) {
+        top: 0;
+        width: 110px;
+        height: 45px;
+    }
+}
