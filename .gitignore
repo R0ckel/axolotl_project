@@ -1,2 +1,5 @@
-.AxolotlProject\.vs\AxolotlProject\DesignTimeBuild
-.AxolotlProject\.vs\AxolotlProject\v17
+.AxolotlProject\.vs\
+.vs
+.idea
+.AxolotlProject\bin
+.AxolotlProject\obj
