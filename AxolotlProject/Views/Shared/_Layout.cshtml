@@ -1,11 +1,59 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Axolotl Project</title>
+    <link rel="stylesheet" href="~/css/profile.css">
+    <link rel="stylesheet" href="~/AxolotlProject.styles.css" asp-append-version="true"/>
+</head>
+<body>
+<div id="page-container">
+    <header class="header__container">
+        <div class="header__inner">
+            <span class="inner__left">
+                <div class="inner"><i class="fa-sharp fa-solid fa-bars"></i></div>
+            </span>
+            <span class="inner__right">
+                <div class="inner"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <div class="inner"><partial name="_LoginPartial" /></div>
+                <div class="inner"><i class="fa-regular fa-bell"></i></div>
+                <div class="inner"><i class="fa-solid fa-bookmark"></i></div>
+                <div class="inner"><i class="fa-solid fa-gears"></i></div>
+            </span>
+        </div>
+    </header>
+
+    @* <div id="main-grid"> *@
+        @RenderBody()
+    @* </div> *@
+
+    <footer class="footer__container">
+        <div class="footer__inner">
+            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi aspernatur autem consequatur dicta, eos
+                error eum hic sapiente unde.</div>
+            <div class="copy">&copy; 4K-Dev, Inc. All rights reserved.</div>
+        </div>
+    </footer>
+</div>
+<script src="https://kit.fontawesome.com/e101ba82dd.js" crossorigin="anonymous"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+
+
+
+@* <!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AxolotlProject</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AxolotlProject.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -47,4 +95,4 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-</html>
+</html> *@

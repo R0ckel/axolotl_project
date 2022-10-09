@@ -1,7 +1,6 @@
-﻿namespace AxolotlProject.Models
+﻿namespace AxolotlProject.Models;
+
+public enum UserSex
 {
-    public enum UserSex
-    {
-        Male, Female, Other
-    }
+    Male, Female, Other
 }

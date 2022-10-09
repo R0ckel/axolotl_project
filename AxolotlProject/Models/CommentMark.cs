@@ -1,17 +1,10 @@
-﻿namespace AxolotlProject.Models
-{
-    public class CommentMark
-    {
-        public Guid UserId { get; set; }
-        public Guid CommentId { get; set; }
-        public bool Liked { get; set; }
+﻿namespace AxolotlProject.Models;
 
-        //constructor
-        public CommentMark(Guid userId, Guid commentId, bool liked)
-        {
-            UserId = userId;
-            CommentId = commentId;
-            Liked = liked;
-        }
-    }
+public class CommentMark
+{
+    public Guid UserId { get; set; }
+    public User? User { get; set; }
+    public Guid CommentId { get; set; }
+    public Comment? Comment { get; set; }
+    public bool Liked { get; set; }
 }

@@ -1,0 +1,66 @@
+@page
+@model ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div id="main-grid">
+    <div class="main-grid__item1">
+        <img src="~/img/arrow.png" alt="arrow" style="width: 22px; height: 22px;"/>
+        <span class="heading-big">Axolotl's Answers</span><br />
+        <span class="heading-medium">Social question-and-answer website</span>
+    </div>
+    <div class="main-grid__item2">
+        <div class="username header2">
+            <span class="user-login">@Model.Username</span>
+        </div>
+        <div class="avatar_note__block">
+            <div class="avatar__block">
+                <img src="~/img/avatar.png" alt="avatar" class="avatar__image"/>
+            </div>
+            <div class="note__block">
+                <form id="profile-form" method="post">
+                    <textarea asp-for="Input.Description" class="form-control" id="notes" placeholder="Note any information here"
+                                rows="10" cols="50"></textarea>
+                    <button id="update-profile-button" type="submit">Save</button>
+                </form>
+            </div>
+        </div>
+        <div class="user-information">
+            <div class="userdb__information">
+                <span><span class="bolder">Register date:</span> 2022-10-01 15:21:13</span>
+                <span><span class="bolder">Last online:</span> 2022-10-01 16:22:14 (6 mins ago)</span>
+            </div>
+            <hr>
+            <div class="user__about">
+                <span>@Model.Description</span>
+            </div>
+        </div>
+        <div class="information-choosing">
+            <div class="information-choosing__buttons">
+                <button class="information-choosing__button">Posts and comments</button>
+                <button class="information-choosing__button">Answers</button>
+                <button class="information-choosing__button">Likes and dislikes</button>
+                <button class="information-choosing__button">Achievements</button>
+                <button class="information-choosing__button">Categories</button>
+                <button class="information-choosing__button">Actions log</button>
+            </div>
+            <div class="information-choosing__information">
+
+            </div>
+        </div>
+        <div class="profile-actions">
+            <div><span><a href="#" class="bottom_links">Go to the settings</a></span></div>
+            <span><a href="#" class="bottom_links">Block user</a></span> |
+            <span><a href="#" class="bottom_links">Complain on the user</a></span> |
+            <span><a href="#" class="bottom_links">Manage content</a></span>
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout">
+                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

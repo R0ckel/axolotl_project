@@ -1,23 +1,16 @@
-:root {
-    --main-color: #ff5d55;
-    --block-color: #EBEBEB;
-    --black-color: #000000;
-    --input-color: #EDEDEE;
-    --white-color: #FFFFFF;
-}
-body {
+.wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     height: 95vh;
     margin: -20px 0 50px;
-    background-image: url("../../wwwroot/img/axolotl_background.jpg");
+    background-image: url("~/wwwroot/img/axolotl_background.jpg");
     background-repeat: repeat;
     background-position: center;
 }
 form {
-    background-color: var(--white-color);
+    background-color: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,7 +20,7 @@ form {
     text-align: center;
 }
 input {
-    background-color: var(--input-color);
+    background-color: #EDEDEE;
     border: none;
     border-radius: 30px;
     padding: 12px 15px;
@@ -35,7 +28,7 @@ input {
     width: 100%;
 }
 .container {
-    background-color: var(--block-color);
+    background-color: #EBEBEB;
     border-radius: 30px;
     box-shadow: 4px 3px 6px -1px rgba(158, 158, 158, 0.39);
     position: relative;
@@ -87,7 +80,7 @@ span.text {
 button {
     border: none;
     padding: 10px 4px 10px;
-    background-color: var(--main-color);
+    background-color: #ff5d55;
     display: inline-block;
     border-radius: 16px;
     width: 200px;
@@ -97,18 +90,18 @@ button {
 }
 a.forgot-pwd, a.forgot-pwd:visited {
     float: right;
-    color: var(--black-color);
+    color: #000000;
 }
 div.forgot-pwd {
     width: 100%;
     position: relative;
 }
 a.forgot-pwd:hover {
-    color: var(--main-color);
+    color: #ff5d55;
 }
 i {
     font-size: 34px;
-    color: var(--black-color);
+    color: #000000;
 }
 @media (min-width: 580px) and (max-width: 750px) {
     button {
@@ -240,7 +233,7 @@ i {
         font-size: 30px;
     }
     input {
-        background-color: var(--input-color);
+        background-color: #EDEDEE;
         border: none;
         padding: 8px 10px;
         margin: 6px 0;
@@ -300,7 +293,7 @@ i {
         font-size: 25px;
     }
     input {
-        background-color: var(--input-color);
+        background-color: #EDEDEE;
         border: none;
         padding: 6px 10px;
         margin: 6px 0;

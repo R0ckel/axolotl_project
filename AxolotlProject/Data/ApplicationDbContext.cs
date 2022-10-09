@@ -1,13 +1,50 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using AxolotlProject.Models;
 
-namespace AxolotlProject.Data
+namespace AxolotlProject.Data;
+
+public class ApplicationDbContext : IdentityDbContext<User, Microsoft.AspNetCore.Identity.IdentityRole, string>
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public DbSet<UserPost>? UserPosts { get; set; }
+    public DbSet<PostMark>? PostsMarks { get; set; }
+    public DbSet<Comment>? Comments { get; set; }
+    public DbSet<CommentMark>? CommentsMarks { get; set; }
+
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options) {}
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+        modelBuilder.Entity<UserPost>()
+            .HasOne(post => post.User)
+            .WithMany(user => user.Posts);
+        modelBuilder.Entity<UserPost>()
+            .HasMany(post => post.Comments)
+            .WithOne(comment => comment.Post);
+        modelBuilder.Entity<UserPost>()
+            .HasMany(post => post.Marks)
+            .WithOne(mark => mark.Post);
+        
+        modelBuilder.Entity<Comment>()
+            .HasOne(comment => comment.User)
+            .WithMany(user => user.Comments);
+        modelBuilder.Entity<Comment>()
+            .HasMany(comment => comment.CommentMarks)
+            .WithOne(mark => mark.Comment);
+
+        modelBuilder.Entity<PostMark>()
+            .HasOne(mark => mark.User)
+            .WithMany(user => user.PostMarks);
+        modelBuilder.Entity<PostMark>()
+            .HasKey(mark => new { mark.UserId, mark.PostId });
+
+        modelBuilder.Entity<CommentMark>()
+            .HasOne(mark => mark.User)
+            .WithMany(user => user.CommentMarks);
+        modelBuilder.Entity<CommentMark>()
+            .HasKey(mark => new { mark.UserId, mark.CommentId });
+
+        base.OnModelCreating(modelBuilder);
     }
 }
