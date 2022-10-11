@@ -5,47 +5,44 @@
     ViewData["Title"] = "Log in";
 }
 
-<div class="wrapper">
-    <div class="container">
-        <div class="container__welcoming">
-            <div class="welcoming__overlay">
-                <div class="overlay__left">
-                    <span class="header">Welcome!</span>
-                    <span class="text">Welcome to Axolotl's Answers, Q&A service!
-                        Axolotl's Answers is a real treasue for those ones, who likes diving deep into the well of info
-                        from every topic they're interested in.
-                        The most efficient path to figuring out the way our world works lies through communication,
-                        and that's why we offer you to join Axolotl's Answers and become one of those smart and
-                        sociable axolotls!</span>
-                    <div class="buttons">
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"><button class="register">Register now!</button></a>
-                        <a asp-page="/"><button class="return">Return to the main</button></a>
-                    </div>
+<div class="container">
+    <div class="container__welcoming">
+        <div class="welcoming__overlay">
+            <div class="overlay__left">
+                <span class="header">Welcome!</span>
+                <span class="text">Welcome to Axolotl's Answers, Q&A service!
+                    Axolotl's Answers is a real treasue for those ones, who likes diving deep into the well of info
+                    from every topic they're interested in.
+                    The most efficient path to figuring out the way our world works lies through communication,
+                    and that's why we offer you to join Axolotl's Answers and become one of those smart and
+                    sociable axolotls!</span>
+                <div class="buttons">
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"><button class="register">Register now!</button></a>
+                    <a asp-page="/"><button class="return">Return to the main</button></a>
                 </div>
             </div>
         </div>
-        <div class="container__login">
-            <form id="account" method="post">
-                <span class="header">Log In Now</span>
-                <span class="text">Please log in to continue using our website.</span>
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" type="text" placeholder="E-mail or login" />
-                <span asp-validation-for="Input.Email"></span>
-                <input type="password" asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Password">
-                <span asp-validation-for="Input.Password"></span>
-                <div class="forgot-pwd" id="forgot-password" asp-page="./ForgotPassword"><a href="#" class="forgot-pwd">Forgot password?</a></div>
-                <button type="submit" class="login_btn">Login</button>
-                @* <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button> *@
-                <div class="social-networks">
-                    <span class="text">Or connect with:</span>
-                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="#"><i class="fa-brands fa-google"></i></a>
-                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                </div>
-            </form>
-        </div>
+    </div>
+    <div class="container__login">
+        <form id="account" method="post">
+            <span class="header">Log In Now</span>
+            <span class="text">Please log in to continue using our website.</span>
+            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" type="text" placeholder="E-mail or login" />
+            <span asp-validation-for="Input.Email"></span>
+            <input type="password" asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Password">
+            <span asp-validation-for="Input.Password"></span>
+            <div class="forgot-pwd" id="forgot-password" asp-page="./ForgotPassword"><a href="#" class="forgot-pwd">Forgot password?</a></div>
+            <button type="submit" class="login_btn">Login</button>
+            @* <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button> *@
+            <div class="social-networks">
+                <span class="text">Or connect with:</span>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-google"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+        </form>
     </div>
 </div>
-
 
 
 
