@@ -4,6 +4,8 @@
     ViewData["Title"] = "Profile";
 }
 
+<link rel="stylesheet" href="~/css/profile.css" asp-append-version="true"/>
+
 <div id="main-grid">
     <div class="main-grid__item1">
         <img src="~/img/arrow.png" alt="arrow" style="width: 22px; height: 22px;"/>
@@ -50,13 +52,13 @@
             </div>
         </div>
         <div class="profile-actions">
-            <div><span><a href="#" class="bottom_links">Go to the settings</a></span></div>
+            <div>
+                <span><a href="#" class="bottom_links">Go to the settings</a></span> |
+                <span><a class="bottom_links" asp-area="Identity" asp-page="/Account/Logout">Logout</a></span>
+            </div>
             <span><a href="#" class="bottom_links">Block user</a></span> |
             <span><a href="#" class="bottom_links">Complain on the user</a></span> |
             <span><a href="#" class="bottom_links">Manage content</a></span>
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
         </div>
     </div>
 </div>

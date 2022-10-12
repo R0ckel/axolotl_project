@@ -2,9 +2,11 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    Layout = "/Views/Shared/_LayoutVanilla.cshtml";
 }
 
-    
+<link rel="stylesheet" href="~/css/registration.css" asp-append-version="true"/>
+
 <div id="container">
     <div id="container__item1">
         <span>Sign Up</span>
@@ -27,21 +29,21 @@
 
             <div>
                 <input asp-for="Input.Login" autocomplete="login" aria-required="true" type="text" placeholder="Login" required><span data-tooltip="Use only latin characters and numbers. Min: 4, max: 16." data-flow="right">?</span>
-                <span asp-validation-for="Input.Login"></span>
+                @* <span asp-validation-for="Input.Login"></span> *@
                 <input asp-for="Input.Email" autocomplete="email" aria-required="true" type="email" placeholder="E-mail" required><span data-tooltip="Enter real email." data-flow="right">?</span>
-                <span asp-validation-for="Input.Email"></span>
+                @* <span asp-validation-for="Input.Email"></span> *@
                 <input asp-for="Input.Password" autocomplete="new-password" aria-required="true" type="password" placeholder="Password" required><span data-tooltip="Use only latin characters, numbers, *, -, ., _. Min: 8, max: 20." data-flow="right">?</span>
-                <span asp-validation-for="Input.Password"></span>
+                @* <span asp-validation-for="Input.Password"></span> *@
                 <input asp-for="Input.ConfirmPassword" autocomplete="new-password" aria-required="true" type="password" placeholder="Repeat your password" required><span data-tooltip="Must be the same as password." data-flow="right">?</span>
-                <span asp-validation-for="Input.ConfirmPassword"></span>
+                @* <span asp-validation-for="Input.ConfirmPassword"></span> *@
             </div>
             <div>
                 <input asp-for="Input.Name" autocomplete="login" aria-required="true" type="text" placeholder="First Name" required><span data-tooltip="Use only latin. Min: 3, max: 12." data-flow="right">?</span>
-                <span asp-validation-for="Input.Name"></span>
+                @* <span asp-validation-for="Input.Name"></span> *@
                 <input asp-for="Input.Surname" autocomplete="login" aria-required="true" type="text" placeholder="Last Name" required><span data-tooltip="Use only latin. Min: 3, max: 12." data-flow="right">?</span>
-                <span asp-validation-for="Input.Surname"></span>
+                @* <span asp-validation-for="Input.Surname"></span> *@
                 <input asp-for="Input.Birthdate" autocomplete="login" aria-required="true" type="date"><span data-tooltip="Dont use future date." data-flow="right">?</span><br>
-                <span asp-validation-for="Input.Birthdate"></span>
+                @* <span asp-validation-for="Input.Birthdate"></span> *@
 
                 <label><input type="radio" asp-for="Input.Gender" value="Male" required>Male</label>
                 <label><input type="radio" asp-for="Input.Gender" value="Female" required>Female</label>
@@ -52,6 +54,7 @@
         </form>
     </div>
 </div> 
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
