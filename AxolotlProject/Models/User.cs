@@ -39,4 +39,32 @@ public class User : IdentityUser
 
     [PersonalData]
     public List<CommentMark>? CommentMarks { get; set; }
+
+    //testing
+    public void AddPost(UserPost userPost)
+    {
+        Posts?.Add(userPost);
+    }
+    public void DeletePost(Guid postId)
+    {
+        Posts?.RemoveAll(p => p.Id == postId);
+    }
+    public void EditPost(UserPost userPost)
+    {
+        int pos = Posts?.FindIndex(p => p.Id == userPost.Id)??-1;
+        if (pos != -1 && Posts != null)
+        {
+            Posts[pos] = userPost;
+            return;
+        }
+        if (pos == -1)
+        {
+            throw new KeyNotFoundException(nameof(userPost));
+        }
+    }
+
+    public UserPost? GetPost(Guid id)
+    {
+        return Posts?.Find(p => p.Id == id) ?? null;
+    }
 }

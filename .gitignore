@@ -1,5 +1,7 @@
-.AxolotlProject\.vs\
+.AxolotlProject\\.vs
 .vs
 .idea
-.AxolotlProject\bin
-.AxolotlProject\obj
+.AxolotlProject\\bin
+.AxolotlProject\\obj
+.AxolotlUnitTests\\bin
+.AxolotlUnitTests\\obj
