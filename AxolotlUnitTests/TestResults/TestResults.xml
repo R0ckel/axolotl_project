@@ -1,31 +1,31 @@
 <testsuites>
-  <testsuite name="AxolotlUnitTests.dll" tests="12" skipped="1" failures="0" errors="0" time="0.0088286" timestamp="2022-10-12T22:17:15" hostname="DESKTOP-EAVBUUA" id="0" package="AxolotlUnitTests.dll">
+  <testsuite name="AxolotlUnitTests.dll" tests="12" skipped="1" failures="0" errors="0" time="0.0089236" timestamp="2022-10-12T22:28:13" hostname="DESKTOP-EAVBUUA" id="0" package="AxolotlUnitTests.dll">
     <properties />
-    <testcase classname="AxolotlUnitTests.ModelsTests" name="DeletingCommentUpdatesUserPost" time="0.0022843" />
-    <testcase classname="AxolotlUnitTests.ModelsTests" name="EditingCommentUpdatesUserPost" time="0.0035969" />
-    <testcase classname="AxolotlUnitTests.ModelsTests" name="EditingNotExistingPostThrows" time="0.0006194" />
-    <testcase classname="AxolotlUnitTests.ModelsTests" name="EditingPostUpdatesUserPosts" time="0.0002744" />
-    <testcase classname="AxolotlUnitTests.ModelsTests" name="DeletingPostUpdatesUserPosts" time="0.0000986" />
-    <testcase classname="AxolotlUnitTests.ModelsTests" name="AddedUserPostIsLinked" time="0.0000969" />
+    <testcase classname="AxolotlUnitTests.ModelsTests" name="DeletingCommentUpdatesUserPost" time="0.0022182" />
+    <testcase classname="AxolotlUnitTests.ModelsTests" name="EditingCommentUpdatesUserPost" time="0.0037424" />
+    <testcase classname="AxolotlUnitTests.ModelsTests" name="EditingNotExistingPostThrows" time="0.0006154" />
+    <testcase classname="AxolotlUnitTests.ModelsTests" name="EditingPostUpdatesUserPosts" time="0.0002826" />
+    <testcase classname="AxolotlUnitTests.ModelsTests" name="DeletingPostUpdatesUserPosts" time="0.0000989" />
+    <testcase classname="AxolotlUnitTests.ModelsTests" name="AddedUserPostIsLinked" time="0.0000995" />
     <testcase classname="AxolotlUnitTests.ModelsTests" name="AddingPostNotUpdatesUserPosts" time="0.0010000">
       <skipped />
     </testcase>
-    <testcase classname="AxolotlUnitTests.ModelsTests" name="EditingCommentUpdatesPostsUser" time="0.0004420" />
-    <testcase classname="AxolotlUnitTests.ModelsTests" name="AddingCommentUpdatesUserPost" time="0.0000948" />
-    <testcase classname="AxolotlUnitTests.ModelsTests" name="AddingPostUpdatesUserPosts" time="0.0000872" />
-    <testcase classname="AxolotlUnitTests.ModelsTests" name="EditingNotExistingCommentThrows" time="0.0001325" />
-    <testcase classname="AxolotlUnitTests.ModelsTests" name="AddedCommentIsLinked" time="0.0001016" />
+    <testcase classname="AxolotlUnitTests.ModelsTests" name="EditingCommentUpdatesPostsUser" time="0.0004453" />
+    <testcase classname="AxolotlUnitTests.ModelsTests" name="AddingCommentUpdatesUserPost" time="0.0000987" />
+    <testcase classname="AxolotlUnitTests.ModelsTests" name="AddingPostUpdatesUserPosts" time="0.0000903" />
+    <testcase classname="AxolotlUnitTests.ModelsTests" name="EditingNotExistingCommentThrows" time="0.0001331" />
+    <testcase classname="AxolotlUnitTests.ModelsTests" name="AddedCommentIsLinked" time="0.0000992" />
     <system-out>Absurd test example
 
 Test Framework Informational Messages:
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.4.3+1b45f5407b (64-bit .NET 6.0.10)
-[xUnit.net 00:00:04.71]   Discovering: AxolotlUnitTests
-[xUnit.net 00:00:04.74]   Discovered:  AxolotlUnitTests
-[xUnit.net 00:00:04.74]   Starting:    AxolotlUnitTests
-[xUnit.net 00:00:04.78]       Absurd test example
-[xUnit.net 00:00:04.79]   Finished:    AxolotlUnitTests
+[xUnit.net 00:00:01.09]   Discovering: AxolotlUnitTests
+[xUnit.net 00:00:01.12]   Discovered:  AxolotlUnitTests
+[xUnit.net 00:00:01.12]   Starting:    AxolotlUnitTests
+[xUnit.net 00:00:01.17]       Absurd test example
+[xUnit.net 00:00:01.19]   Finished:    AxolotlUnitTests
 </system-out>
-    <system-err>Warning - [xUnit.net 00:00:04.78]     AxolotlUnitTests.ModelsTests.AddingPostNotUpdatesUserPosts [SKIP]
+    <system-err>Warning - [xUnit.net 00:00:01.17]     AxolotlUnitTests.ModelsTests.AddingPostNotUpdatesUserPosts [SKIP]
 </system-err>
   </testsuite>
 </testsuites>
