@@ -12,7 +12,7 @@ body {
     flex-direction: column;
     height: 95vh;
     margin: -20px 0 50px;
-    background-image: url("../../wwwroot/img/axolotl_background.jpg");
+    background-image: url("../img/axolotl_background.jpg");
     background-repeat: repeat;
     background-position: center;
 }

@@ -2,7 +2,7 @@ body {
     margin: 0;
     height: 95vh;
     width: 100%;
-    background-image: url(../../wwwroot/img/axolotl_background.jpg);
+    background-image: url(../img/axolotl_background.jpg);
     background-repeat: repeat;
     background-position: center;
     display: flex;
@@ -67,7 +67,7 @@ form {
     padding-left: 4%;
     justify-content: center;
 }
-input[type="submit"] {
+#registerSubmit {
     border: none;
     padding: 10px 4px 10px;
     background-color: #ff5d55;

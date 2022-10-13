@@ -1,17 +1,10 @@
-﻿namespace AxolotlProject.Models
-{
-    public class PostMark
-    {
-        public Guid UserId { get; set; }
-        public Guid PostId { get; set; }
-        public bool Liked { get; set; }
+﻿namespace AxolotlProject.Models;
 
-        //constructor
-        public PostMark(Guid userId, Guid postId, bool liked)
-        {
-            UserId = userId;
-            PostId = postId;
-            Liked = liked;
-        }
-    }
+public class PostMark
+{
+    public Guid UserId { get; set; }
+    public User? User { get; set; }
+    public Guid PostId { get; set; }
+    public UserPost? Post { get; set; }
+    public bool Liked { get; set; }
 }
