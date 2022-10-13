@@ -25,7 +25,15 @@
     </div>
     <div id="container__item2">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <div asp-validation-summary="ModelOnly"></div>
+            <div asp-validation-summary="ModelOnly" style="
+								position: absolute;
+								top: 50%;
+								left: 2%;
+								transform: translateY(-50%);
+								width: 300px;
+								background: rgba(255, 0, 0, .4);
+								border-radius: 5px;
+							"></div>
 
             <div>
                 <input asp-for="Input.Login" autocomplete="login" aria-required="true" type="text" placeholder="Login" required><span data-tooltip="Use only latin characters and numbers. Min: 4, max: 16." data-flow="right">?</span>
