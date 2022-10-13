@@ -5,3 +5,10 @@
 .AxolotlProject/obj
 .AxolotlUnitTests/bin
 .AxolotlUnitTests/obj
+.AxolotlProject/.vs/*
+.vs/*
+.idea/*
+.AxolotlProject/bin/*
+.AxolotlProject/obj/*
+.AxolotlUnitTests/bin/*
+.AxolotlUnitTests/obj/*
