@@ -108,6 +108,10 @@ i {
     margin: auto;
     width: 80%;
 }
+#heading{
+    font-size:30px;
+    width: 100%;
+}
 #post {
     resize: vertical;
     min-height: 300px;

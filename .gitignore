@@ -1,5 +1,5 @@
-.AxolotlProject/.vs
-.vs
-.idea
-.AxolotlProject/bin
-.AxolotlProject/obj
+/AxolotlProject/.vs
+/idea
+/AxolotlProject/bin
+/AxolotlProject/obj
+/.vs

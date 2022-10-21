@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Text;
 
 namespace AxolotlProject.Models;
 
@@ -39,4 +40,15 @@ public class User : IdentityUser
 
     [PersonalData]
     public List<CommentMark>? CommentMarks { get; set; }
+
+    public int GetUserRating()
+    {
+        if(Posts == null) return 0;
+        int rating = 0;
+        foreach (var post in Posts)
+        {
+            rating += post.CountRating();
+        }
+        return rating;
+    }
 }
