@@ -87,17 +87,17 @@
                         <div class="comments-text">
                             @foreach (var comment in ViewBag.Comments){
                                 <div class="commentBlock">
-                                    <h3>@(comment.User?.Login??"unknown")</h3>
+                                    <h3>anonymous user</h3>
                                     @comment.Content
                                 </div>
                                 <div class="commentManagement">
-                                    @if(true /*Check if this is user`s comment*/){
-                                        <a asp-controller="UserPost" asp-action="DeleteComment"
-                                             asp-route-postId=@Model.Id asp-route-commentId=@comment.Id>
-                                            <button>
-                                                Delete
-                                            </button>
-                                        </a>
+                                    @if(true /*Check if this is user`s comment*/){ 
+                                        <a asp-action="EditComment" asp-route-id="@comment.Id"><button>Edit</button></a>
+                                        <form method="post" asp-controller="UserPost" asp-action="DeleteComment" 
+                                        asp-route-postId=@Model.Id asp-route-commentId=@comment.Id style="display:inline-block">
+                                            <input type="submit" value="Delete Comment"/>
+                                        </form>
+
                                             @*
                                                 ADD EDITING FITURE
                                                 
@@ -132,14 +132,6 @@
             </div>
         </div>
     </div>
-
-    @*<footer class="footer__container">
-        <div class="footer__inner">
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi aspernatur autem consequatur dicta, eos
-                error eum hic sapiente unde.</div>
-            <div class="copy">&copy; 4K-Dev, Inc. All rights reserved.</div>
-        </div>
-    </footer>*@
 </div>
 </body>
 </html>

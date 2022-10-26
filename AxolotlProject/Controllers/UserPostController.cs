@@ -47,6 +47,43 @@ namespace AxolotlProject.Controllers
             return View(post);
         }
 
+        public async Task<IActionResult> EditPost(Guid? id)
+        {
+            if (id == null || _context.UserPosts == null)
+            {
+                return NotFound();
+            }
+
+            var post = await _context.UserPosts.FindAsync(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+            return View(post);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPost(Guid? id, [Bind("Id,Heading,Content,PostCategory")] UserPost post)
+        {
+            if (id != post.Id) return NotFound();
+            _context.Update(post);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost, ActionName("DeletePost")]
+        public async Task<IActionResult> DeletePost(Guid postId)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == postId);
+            if(user == null || post == null) return NotFound();
+            _context.Remove(post);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
         public async Task<IActionResult> ShowPost(Guid? postId)
         {
             if (postId == null || _context.UserPosts == null)
@@ -62,11 +99,11 @@ namespace AxolotlProject.Controllers
             }
 
             ViewBag.Comments = _context.Comments?.Where(comment => comment.PostId.Equals(postId)).ToList();
-
+            
             return View(post);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("CreateComment")]
         public async Task<IActionResult> CreateComment(string commentContent, Guid postId)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -89,15 +126,50 @@ namespace AxolotlProject.Controllers
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction();
+            return RedirectToAction("ShowPost", new { postId = postId });
         }
 
-        public async Task<IActionResult> DeleteComment(Guid postId, Guid commentId)
+        public async Task<IActionResult> EditComment(Guid? id)
+        {
+            if (id == null || _context.Comments == null)
+            {
+                return NotFound();
+            }
+
+            var comment = await _context.Comments.FindAsync(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+            return View(comment);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditComment(Guid? id, string Content)
+        {
+            var comment = await _context.Comments!.FirstOrDefaultAsync(p => p.Id == id);
+            if(comment == null) return NotFound();
+            comment.Content = Content;
+            _context.Update(comment);
+            await _context.SaveChangesAsync();
+            Console.WriteLine(comment.PostId);
+            return RedirectToAction("ShowPost", new { postId = comment.PostId });
+        }
+
+        [HttpPost, ActionName("DeleteComment")]
+        public async Task<IActionResult> DeleteComment(Guid commentId, Guid postId)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var comment = await _context.Comments!.FirstOrDefaultAsync(c => c.Id == commentId);
-            comment?.DeleteSelf();
-            return RedirectToAction("ShowPost", postId);
+            var comment = await _context.Comments!.FirstOrDefaultAsync(p => p.Id == commentId);
+            if(user == null || comment == null) return NotFound();
+            if(comment.UserId == user.Id) {
+                _context.Remove(comment);
+                comment.DeleteSelf();
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("ShowPost", new { postId = postId });
         }
     }
 }

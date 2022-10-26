@@ -1,0 +1,53 @@
+﻿@using AxolotlProject.Models
+@model Comment
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Axolotl Project | Edit post</title>
+    <script src="https://kit.fontawesome.com/e101ba82dd.js" crossorigin="anonymous"></script>
+    <script src="~/js/bbcodes.js"></script>
+    <link rel="stylesheet" href="~/css/create_post.css" asp-append-version="true" />
+</head>
+<body>
+    <div id="page-container">
+        <header class="header__container">
+            <div class="header__inner">
+                <span class="inner__left">
+                    <div class="inner"><i class="fa-sharp fa-solid fa-bars"></i></div>
+                </span>
+                <span class="inner__right">
+                    <div class="inner"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    <div class="inner"><i class="fa-solid fa-user"></i></div>
+                    <div class="inner"><i class="fa-regular fa-bell"></i></div>
+                    <div class="inner"><i class="fa-solid fa-bookmark"></i></div>
+                    <div class="inner"><i class="fa-solid fa-gears"></i></div>
+                </span>
+            </div>
+        </header>
+
+        <div class="main-container">
+            <div class="main-container__container">
+                <div class="header-text">
+                    <span>Comment editing</span>
+                </div>
+                <div class="form">
+                    <form method="post" asp-controller="UserPost" asp-action="EditComment" asp-route-id="@Model.Id">
+                        <div class="textarea_pserPost/EditPostlace">
+                            <label asp-for="Content"></label>
+                            <textarea asp-for="Content" id="post" placeholder="Text of the post"></textarea>
+                        </div>
+                        <div class="buttons">
+                            <input type="submit" class="submit-buttons" value="Save Changes">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
