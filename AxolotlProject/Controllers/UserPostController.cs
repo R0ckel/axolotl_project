@@ -1,82 +1,28 @@
 ﻿using AxolotlProject.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
+using AxolotlProject.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AxolotlProject.Controllers
 {
     public class UserPostController : Controller
     {
         private readonly ILogger<UserPostController> _logger;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        //DB template
-        static User? testUser;
-        static UserPost? testPost;
-        static Comment? testComment1;
-        static Comment? testComment2;
-
-        public UserPostController(ILogger<UserPostController> logger)
+        public UserPostController(ILogger<UserPostController> logger, ApplicationDbContext context, UserManager<User> userManager)
         {
             _logger = logger;
-
-            //DB template
-            if (testUser == null)
-            {
-                testComment1 = new Comment()
-                {
-                    Id = Guid.NewGuid(),
-                    Content = "Comment #1 text",
-                    CommentMarks = new List<CommentMark>()
-                };
-                testComment2 = new Comment()
-                {
-                    Id = Guid.NewGuid(),
-                    Content = "Comment #2 text",
-                    CommentMarks = new List<CommentMark>()
-                };
-                testPost = new UserPost()
-                {
-                    Id = Guid.NewGuid(),
-                    Heading = "Post heading",
-                    Content = "Post Content",
-                    PostCategory = PostCategory.Economy,
-                    Comments = new List<Comment>()
-                {
-                    testComment1, testComment2
-                },
-                    Marks = new List<PostMark>(),
-                    Tags = new List<string>()
-                {
-                    "tag #1", "tag #2"
-                }
-                };
-                testUser = new User()
-                {
-                    Login = "UserLogin228",
-                    UserName = "Tester",
-                    UserSurname = "SutTester",
-                    Posts = new List<UserPost>()
-                {
-                    testPost
-                },
-                    Comments = new List<Comment>()
-                {
-                    testComment1, testComment2
-                }
-                };
-                testComment1.PostId = testPost.Id;
-                testComment1.Post = testPost;
-                testComment2.PostId = testPost.Id;
-                testComment2.Post = testPost;
-                testComment1.UserId = testUser.Id;
-                testComment1.User = testUser;
-                testComment2.UserId = testUser.Id;
-                testComment2.User = testUser;
-                testPost.User = testUser;
-            }
+            _context = context;
+            _userManager = userManager;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return RedirectToAction("CreatePost");
+            IEnumerable<UserPost> result = await _context.UserPosts!.ToListAsync();
+            return View(result);
         }
 
         public IActionResult CreatePost()
@@ -84,63 +30,74 @@ namespace AxolotlProject.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
-        public IActionResult ShowPost([FromForm] string heading, string content, PostCategory postCategory, List<string> tags)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreatePost([Bind("Id,Heading,Content,PostCategory")] UserPost post)
         {
-            var post = new UserPost()
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            post.User = user;
+            post.UserId = user.Id;
+            if (ModelState.IsValid)
             {
-                Id = Guid.NewGuid(),
-                Heading = heading,
-                Content = content,
-                PostCategory = postCategory,
-                Comments = new List<Comment>(),
-                Marks = new List<PostMark>(),
-                Tags = tags,
-                User = testUser,
-                UserId = testUser?.Id
-            };
-
+                _context.Add(post);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
             return View(post);
         }
 
-        [HttpGet]
-        public IActionResult ShowPost([FromRoute] Guid postId)
+        public async Task<IActionResult> ShowPost(Guid? postId)
         {
-            //Get Post from DB by ID
-            _ = postId;
-            var post = testPost;
+            if (postId == null || _context.UserPosts == null)
+            {
+                return NotFound();
+            }
+
+            var post = await _context.UserPosts
+                .FirstOrDefaultAsync(p => p.Id == postId);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Comments = _context.Comments?.Where(comment => comment.PostId.Equals(postId)).ToList();
+
             return View(post);
         }
 
         [HttpPost]
-        [Route("UserPost/CreateComment/{postId}")]
-        public IActionResult CreateComment([FromForm] string commentContent,
-                                           [FromRoute] Guid postId)
+        public async Task<IActionResult> CreateComment(string commentContent, Guid postId)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == postId);
+            if(user == null || post == null) return NotFound();
             var comment = new Comment()
             {
                 Id = Guid.NewGuid(),
                 Content = commentContent,
                 CommentMarks = new List<CommentMark>(),
-                User = testUser,
-                UserId = testUser?.Id,
-                Post = testPost,
-                PostId = testPost?.Id
+                User = user,
+                UserId = user?.Id,
+                Post = post,
+                PostId = post!.Id
             };
-            //GET POST BY ID!
-            testPost?.Comments?.Add(comment);
-            testUser?.Comments?.Add(comment);
-            return RedirectToAction("ShowPost");
+            post?.Comments?.Add(comment);
+            user?.Comments?.Add(comment);
+            if (ModelState.IsValid)
+            {
+                _context.Add(comment);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction();
         }
 
-        [Route("UserPost/DeleteComment/{postId}/{commentId}")]
-        public IActionResult DeleteComment([FromRoute] Guid postId,
-                                           [FromRoute] Guid commentId)
+        public async Task<IActionResult> DeleteComment(Guid postId, Guid commentId)
         {
-            //GET Comment BY ID!
-            var comment = testUser?.Comments?.Find(x=>x.Id==commentId);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var comment = await _context.Comments!.FirstOrDefaultAsync(c => c.Id == commentId);
             comment?.DeleteSelf();
-            return RedirectToAction("ShowPost");
+            return RedirectToAction("ShowPost", postId);
         }
     }
 }

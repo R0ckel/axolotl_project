@@ -37,11 +37,11 @@
                 </div>
 
                 <div class="form">
-                    <form method="post" asp-controller="UserPost" asp-action="ShowPost">
+                    <form method="post" asp-controller="UserPost" asp-action="CreatePost">
                         <div class="select-category">
                             <span>
                                 Select category:
-                                <select name="postCategory">
+                                <select name="PostCategory">
                                     @foreach (PostCategory pc in (PostCategory[])Enum.GetValues(typeof(PostCategory)))
                                     {
                                         <option value=@pc>@pc</option>
@@ -62,12 +62,12 @@
                             <input type="button" value="td" class="bbcode" onclick="formatText ('td');" title="Table tag" />
                         </div>
                         <div class="heading_place">
-                            <label for="heading"></label>
-                            <input id="heading" placeholder="Heaging of the post" name="heading" required />
+                            <label asp-for="Heading"></label>
+                            <input asp-for="Heading" id="heading" placeholder="Heaging of the post" required />
                         </div>
                         <div class="textarea_place">
-                            <label for="post"></label>
-                            <textarea id="post" placeholder="Text of the post" name="content"></textarea>
+                            <label asp-for="Content"></label>
+                            <textarea asp-for="Content" id="post" placeholder="Text of the post"></textarea>
                         </div>
                         <div class="select-tags">
                             <span>Select tags:</span>
@@ -79,7 +79,7 @@
                             </label>
                         </div>
                         <div class="buttons">
-                            <input type="submit" class="submit-buttons" value="Create">
+                            <input type="submit" class="submit-buttons" value="Create Post">
                             <input type="button" class="submit-buttons" value="Preview"> @*???*@
                         </div>
                         <div class="questions">

@@ -11,7 +11,6 @@ public class UserPost
     public User? User { get; set; }
     public List<Comment>? Comments { get; set; }
     public List<PostMark>? Marks { get; set; }
-    public List<string>? Tags { get; set; }
 
     public int CountRating()
     {
@@ -26,14 +25,5 @@ public class UserPost
             else count--;
         }
         return count;
-    }
-
-    public string GetTagsAsString()
-    {
-        if (Tags == null)
-        {
-            return string.Empty;
-        }
-        return string.Join(", ", Tags.Select(x => x.ToString()));
     }
 }

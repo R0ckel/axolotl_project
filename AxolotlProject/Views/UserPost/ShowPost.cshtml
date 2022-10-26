@@ -60,7 +60,7 @@
                         <div><span>Category: @Model.PostCategory</span></div>
                         <div>
                             <span>
-                                Tags: @Model.GetTagsAsString()
+                                @* Tags: @Model.GetTagsAsString() *@
                             </span>
                         </div>
                     </div>
@@ -85,14 +85,14 @@
 
                     <div class="comments">
                         <div class="comments-text">
-                            @foreach (var comment in Model.Comments??new()){
+                            @foreach (var comment in ViewBag.Comments){
                                 <div class="commentBlock">
                                     <h3>@(comment.User?.Login??"unknown")</h3>
                                     @comment.Content
                                 </div>
                                 <div class="commentManagement">
                                     @if(true /*Check if this is user`s comment*/){
-                                        <a method = "Post" asp-controller="UserPost" asp-action="DeleteComment"
+                                        <a asp-controller="UserPost" asp-action="DeleteComment"
                                              asp-route-postId=@Model.Id asp-route-commentId=@comment.Id>
                                             <button>
                                                 Delete

@@ -1,0 +1,67 @@
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model IEnumerable<AxolotlProject.Models.UserPost>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="main-grid">
+    <div class="row">       
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Heading)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PostCategory)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.User)
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Heading)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PostCategory)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.Login)
+                    </td>
+                    <td>
+                        <a asp-action="ShowPost" asp-route-postId="@item.Id">Open</a> |
+                        @* <a asp-controller="UserCart" asp-action="Buy" asp-route-id="@item.Id">Buy</a>
+                        @if(User.IsInRole("ProductManager")) { 
+                            <span> | <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | 
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> </span> *@
+                        }
+                    </td>
+                </tr>
+            }
+            <tr>
+                @if(User.IsInRole("ProductManager")) {
+                    <td>
+                        <a asp-action="CreatePost">Create</a>
+                    </td>
+                }
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
