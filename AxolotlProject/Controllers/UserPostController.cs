@@ -22,9 +22,12 @@ namespace AxolotlProject.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<UserPost> result = await _context.UserPosts!.ToListAsync();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            ViewBag.ViewerId = user?.Id;
             return View(result);
         }
 
+        [Authorize]
         public IActionResult CreatePost()
         {
             return View();
@@ -47,19 +50,14 @@ namespace AxolotlProject.Controllers
             return View(post);
         }
 
+        [Authorize]
         public async Task<IActionResult> EditPost(Guid? id)
         {
-            if (id == null || _context.UserPosts == null)
-            {
+            var post = await _context.UserPosts!.FindAsync(id);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (id == null || _context.UserPosts == null || post == null)
                 return NotFound();
-            }
-
-            var post = await _context.UserPosts.FindAsync(id);
-            if (post == null)
-            {
-                return NotFound();
-            }
-            return View(post);
+            return user.Id == post.UserId ? View(post) : RedirectToAction(nameof(Index));
         }
 
         [Authorize]
@@ -67,20 +65,26 @@ namespace AxolotlProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(Guid? id, [Bind("Id,Heading,Content,PostCategory")] UserPost post)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             if (id != post.Id) return NotFound();
-            _context.Update(post);
-            await _context.SaveChangesAsync();
+            if(user.Id == post.UserId) {
+                _context.Update(post);
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         [HttpPost, ActionName("DeletePost")]
         public async Task<IActionResult> DeletePost(Guid postId)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == postId);
             if(user == null || post == null) return NotFound();
-            _context.Remove(post);
-            await _context.SaveChangesAsync();
+            if(user.Id == post.UserId) {
+                _context.Remove(post);
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction("Index");
         }
 
@@ -98,11 +102,19 @@ namespace AxolotlProject.Controllers
                 return NotFound();
             }
 
+            ViewBag.PostOwner = _context.Users?.Find(post.UserId);
             ViewBag.Comments = _context.Comments?.Where(comment => comment.PostId.Equals(postId)).ToList();
-            
+            var commentsOwners = new Dictionary<Guid, string?>();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            ViewBag.ViewerId = user?.Id;
+            foreach (var item in ViewBag.Comments) {
+                commentsOwners.Add(item.Id, _context.Users?.Find(item.UserId).Login);
+            }
+            ViewBag.CommentsOwners = commentsOwners;
             return View(post);
         }
 
+        [Authorize]
         [HttpPost, ActionName("CreateComment")]
         public async Task<IActionResult> CreateComment(string commentContent, Guid postId)
         {
@@ -129,19 +141,20 @@ namespace AxolotlProject.Controllers
             return RedirectToAction("ShowPost", new { postId = postId });
         }
 
+        [Authorize]
         public async Task<IActionResult> EditComment(Guid? id)
         {
             if (id == null || _context.Comments == null)
             {
                 return NotFound();
             }
-
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             var comment = await _context.Comments.FindAsync(id);
             if (comment == null)
             {
                 return NotFound();
             }
-            return View(comment);
+            return user.Id == comment.UserId ? View(comment) : RedirectToAction("ShowPost", new { postId = comment.PostId });
         }
 
         [Authorize]
@@ -150,14 +163,17 @@ namespace AxolotlProject.Controllers
         public async Task<IActionResult> EditComment(Guid? id, string Content)
         {
             var comment = await _context.Comments!.FirstOrDefaultAsync(p => p.Id == id);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             if(comment == null) return NotFound();
-            comment.Content = Content;
-            _context.Update(comment);
-            await _context.SaveChangesAsync();
-            Console.WriteLine(comment.PostId);
+            if(user.Id == comment.UserId) {
+                comment.Content = Content;
+                _context.Update(comment);
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction("ShowPost", new { postId = comment.PostId });
         }
 
+        [Authorize]
         [HttpPost, ActionName("DeleteComment")]
         public async Task<IActionResult> DeleteComment(Guid commentId, Guid postId)
         {
