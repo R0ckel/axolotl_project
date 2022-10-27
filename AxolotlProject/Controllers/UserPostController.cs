@@ -24,7 +24,7 @@ namespace AxolotlProject.Controllers
             IEnumerable<UserPost> result = await _context.UserPosts!.ToListAsync();
             return View(result);
         }
-
+        [Authorize]
         public IActionResult CreatePost()
         {
             return View();
@@ -46,7 +46,7 @@ namespace AxolotlProject.Controllers
             }
             return View(post);
         }
-
+        [Authorize]
         public async Task<IActionResult> EditPost(Guid? id)
         {
             if (id == null || _context.UserPosts == null)
@@ -72,7 +72,7 @@ namespace AxolotlProject.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize]
         [HttpPost, ActionName("DeletePost")]
         public async Task<IActionResult> DeletePost(Guid postId)
         {
@@ -102,7 +102,7 @@ namespace AxolotlProject.Controllers
             
             return View(post);
         }
-
+        [Authorize]
         [HttpPost, ActionName("CreateComment")]
         public async Task<IActionResult> CreateComment(string commentContent, Guid postId)
         {
@@ -128,7 +128,7 @@ namespace AxolotlProject.Controllers
             }
             return RedirectToAction("ShowPost", new { postId = postId });
         }
-
+        [Authorize]
         public async Task<IActionResult> EditComment(Guid? id)
         {
             if (id == null || _context.Comments == null)
@@ -157,7 +157,7 @@ namespace AxolotlProject.Controllers
             Console.WriteLine(comment.PostId);
             return RedirectToAction("ShowPost", new { postId = comment.PostId });
         }
-
+        [Authorize]
         [HttpPost, ActionName("DeleteComment")]
         public async Task<IActionResult> DeleteComment(Guid commentId, Guid postId)
         {
