@@ -72,12 +72,12 @@
                         <div class="comments-text">
                             @foreach (var comment in ViewBag.Comments){
                                 <div class="commentBlock">
-                                    <h3>anonymous user</h3>
+                                    <h3>@ViewBag.CommentsOwners[comment.Id]</h3>
                                     @comment.Content
                                 </div>
                                 <div class="commentManagement">
-                                    @if(true /*Check if this is user`s comment*/){ 
-                                        <a asp-action="EditComment" asp-route-id="@comment.Id"><button>Edit</button></a>
+                                    @if(User.Identity.IsAuthenticated && comment.UserId == ViewBag.ViewerId){
+                                        <a asp-action="EditComment" asp-route-id="@comment.Id" style="display:inline-block"><button>Edit</button></a>
                                         <form method="post" asp-controller="UserPost" asp-action="DeleteComment" 
                                         asp-route-postId=@Model.Id asp-route-commentId=@comment.Id style="display:inline-block">
                                             <input type="submit" value="Delete Comment"/>
@@ -101,8 +101,8 @@
                     <span class="header-text">Author</span>
                 </div>
                 <hr>
-                <h2>@((Model.User?.Login)??"Anonym")</h2>
-                Have @(Model.User?.Posts?.Count()??-1) post(s)
+                <h2>@ViewBag.PostOwner.Login</h2>
+                Have @ViewBag.PostOwner.Posts?.Count post(s)
             </div>
             <div class="right__container-category">
                 <div class="category__title">
