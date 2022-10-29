@@ -1,0 +1,174 @@
+:root {
+    --main-color: #ff5d55;
+    --block-color: #EBEBEB;
+    --black-color: #000000;
+    --input-color: #EDEDEE;
+    --white-color: #FFFFFF;
+    --darker-color: #ccc;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 95vh;
+    margin: -20px 0 50px;
+    background-repeat: repeat;
+    background-position: center;
+}
+
+.main-frame {
+    background-color: var(--block-color);
+    border-radius: 30px;
+    box-shadow: 4px 3px 6px -1px rgba(158, 158, 158, 0.39);
+    position: relative;
+    overflow: hidden;
+    width: 50%;
+    min-height: 65%;
+}
+.text-part {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.header-text {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.simple-text {
+    padding: 5px 35px 10px;
+    text-align: center;
+    font-size: 110%;
+}
+
+.tabs {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+.tab-part {
+    height: 75%;
+    border-right: 1px solid var(--darker-color);
+    border-left: 1px solid var(--darker-color);;
+}
+.tab {
+    width: 25%;
+}
+.tab, .tab-title {
+    display: inline-block;
+}
+.tab input[type="radio"] { display: none; }
+.tab-title {
+    background: var(--darker-color);
+    padding: 10px;
+    border-bottom: none;
+    width: calc(100% - 20px);
+    text-align: center;
+}
+.tab-content {
+    position: absolute;
+    padding: 10px;
+    left: 0;
+    width: calc(100% - 20px);
+    display: none;
+    background-color: var(--white-color);
+}
+.tab :checked + .tab-title {
+    position: relative;
+    background: var(--white-color);
+    z-index: 1;
+}
+.tab :checked ~ .tab-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 5px;
+    z-index: 999;
+    text-align: center;
+}
+input {
+    background-color: var(--input-color);
+    border: none;
+    border-radius: 30px;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 90%;
+}
+button, .button {
+    border: none;
+    padding: 10px 50px 10px;
+    background-color: var(--darker-color);
+    display: inline-block;
+    border-radius: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: var(--black-color);
+    font-size: 14px;
+    font-family: "Times New Roman";
+}
+.buttons a {
+    text-decoration: none;
+}
+.buttons {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+@media (max-width: 1100px) {
+    .main-frame {
+        min-height: 85%;
+    }
+}
+@media (max-width: 900px) {
+    .main-frame {
+        min-height: 45%;
+    }
+}
+@media (max-width: 780px) {
+    .main-frame {
+        min-height: 55%;
+    }
+}
+@media (max-width: 649px) {
+    .main-frame {
+        width: 85%;
+        min-height: 75%;
+    }
+    .header-text {
+        font-size: 20px;
+        font-weight: bolder;
+    }
+
+    .simple-text {
+        font-size: 90%;
+    }
+}
+@media (max-width: 450px) {
+    .main-frame {
+        min-height: 60%;
+    }
+}
+@media (max-width: 420px) {
+    .main-frame {
+        min-height: 55%;
+    }
+}
+@media (max-width: 370px) {
+    .main-frame {
+        min-height: 67%;
+    }
+}
+@media (max-width: 290px) {
+    .main-frame {
+        min-height: 87%;
+    }
+}
