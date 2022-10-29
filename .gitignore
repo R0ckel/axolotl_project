@@ -1,5 +1,6 @@
-.AxolotlProject/.vs
+/AxolotlProject/.vs
 .vs
-.idea
-.AxolotlProject/bin
-.AxolotlProject/obj
+/idea
+/AxolotlProject/bin
+/AxolotlProject/obj
+/AxolotlProject/bin/Debug/net6.0
