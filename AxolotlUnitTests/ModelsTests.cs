@@ -54,7 +54,7 @@ namespace AxolotlUnitTests
         }
 
         //user -> posts tests
-        [Fact(Skip = "Absurd test example")]
+        [Fact]
         public void AddingPostNotUpdatesUserPosts()
         {
             testUser1.Posts = new();
