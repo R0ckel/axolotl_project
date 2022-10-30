@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore -s /AxolotlProject/AxolotlProject.csproj
+      run: dotnet restore -s AxolotlProject/AxolotlProject.csproj
     - name: Install dependencies
       run: dotnet add AxolotlProject package JunitXml.TestLogger --version 3.0.114
     - name: Build
