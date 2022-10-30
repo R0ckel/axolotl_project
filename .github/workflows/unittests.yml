@@ -18,10 +18,10 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore AxolotlProject/AxolotlProject.sln
+      run: dotnet restore AxolotlProject/AxolotlProject.csproj
     - name: Install dependencies
-      run: dotnet add AxolotlProject/AxolotlProject.sln package JunitXml.TestLogger --version 3.0.114
+      run: dotnet add AxolotlProject/AxolotlProject.csproj package JunitXml.TestLogger --version 3.0.114
     - name: Build
-      run: dotnet build --no-restore AxolotlProject/AxolotlProject.sln
+      run: dotnet build --no-restore AxolotlProject/AxolotlProject.csproj
     - name: Test
-      run: dotnet test \AxolotlProject\AxolotlProject.sln --logger "junit;logfilename=testResults.xml"
+      run: dotnet test \AxolotlProject\AxolotlProject.csproj --logger "junit;logfilename=testResults.xml"
