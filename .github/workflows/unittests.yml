@@ -13,19 +13,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - id: xunit-viewer
-      uses: ./  #use the current project relative to root
-    - name: The generated report
-      run: echo "The report is ${{ steps.xunit-viewer.outputs.report-file }}"    
-    - name: Test
-      run: |
-          [ ${{ steps.xunit-viewer.outputs.report-file }} == "AxolotlUnitTests/TestResults/TestResults.xml" ]
-    - name: Attach the report
-      if: always()
-      uses: actions/upload-artifact@v1
-      with:
-        name: TestResults
-        path: ${{ steps.xunit-viewer.outputs.report-dir }}
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -36,5 +23,38 @@ jobs:
       run: dotnet add AxolotlProject/AxolotlProject.csproj package JunitXml.TestLogger --version 3.0.114
     - name: Build
       run: dotnet build --no-restore AxolotlProject/AxolotlProject.csproj
+      
+      # set pr number, if it's a pr build
+    - name: set pr build number
+      id: PRNUMBER
+      if: ${{ github.event_name == 'pull_request' }}
+      uses: kkak10/pr-number-action@v1.3
+
+      # set report file and title 
+    - name: Set Test Title
+      run: | 
+            if ${{ github.event_name == 'pull_request' }}
+            then
+              echo "title=Test Run for PR #${{steps.PRNUMBER.outputs.pr}} (${{github.run_number}})" >> $GITHUB_ENV
+              echo "file_name=TestReport.${{steps.PRNUMBER.outputs.pr}}.${{github.run_number}}.md" >> $GITHUB_ENV              
+            else
+              echo "title=Test Run ${{github.run_number}}" >> $GITHUB_ENV
+              echo "file_name=TestReport.${{github.run_number}}.md" >> $GITHUB_ENV
+            fi    
+    
     - name: Test
-      run: dotnet test AxolotlProject/AxolotlProject.csproj --logger "junit;logfilename=testResults.xml"
+      run: dotnet test AxolotlProject/AxolotlProject.csproj --logger "junit;LogFileName=${{github.workspace}}/${{env.file_name}};Title=${{env.title}};"
+      
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2
+      if: ${{always()}}
+      with:
+        name: 'Test Run'
+        path: ${{github.workspace}}/${{env.file_name}}
+    - name: comment PR
+      uses: machine-learning-apps/pr-comment@master
+      if: ${{ github.event_name == 'pull_request' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        path: ${{env.file_name}}
