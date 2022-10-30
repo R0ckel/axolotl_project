@@ -39,7 +39,7 @@ jobs:
               echo "file_name=TestReport.${{steps.PRNUMBER.outputs.pr}}.${{github.run_number}}.xml" >> $GITHUB_ENV              
             else
               echo "title=Test Run" >> $GITHUB_ENV
-              echo "file_name=TestReport.xml" >> $GITHUB_ENV
+              echo "file_name=AxolotlUnitTests/TestResults/TestResults.xml" >> $GITHUB_ENV
             fi
     
     - name: Test
