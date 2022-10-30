@@ -25,10 +25,10 @@ jobs:
       run: dotnet build --no-restore AxolotlProject/AxolotlProject.csproj
       
       # set pr number, if it's a pr build
-    # - name: set pr build number
-      # if: ${{ github.event_name == 'pull_request' }}
-      # id: PRNUMBER
-      # uses: kkak10/pr-number-action@v1.3
+    - name: set pr build number
+      if: ${{ github.event_name == 'pull_request' }}
+      id: PRNUMBER
+      uses: kkak10/pr-number-action@v1.3
 
       # set report file and title 
     - name: Set Test Title
