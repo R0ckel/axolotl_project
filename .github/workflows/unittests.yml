@@ -27,7 +27,6 @@ jobs:
       # set pr number, if it's a pr build
     - name: set pr build number
       id: PRNUMBER
-      if: ${{ github.event_name == 'pull_request' }}
       uses: kkak10/pr-number-action@v1.3
 
       # set report file and title 
@@ -53,7 +52,6 @@ jobs:
         path: ${{github.workspace}}/${{env.file_name}}
     - name: comment PR
       uses: machine-learning-apps/pr-comment@master
-      if: ${{ github.event_name == 'pull_request' }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
