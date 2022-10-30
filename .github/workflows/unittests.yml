@@ -13,6 +13,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - id: xunit-viewer
+      uses: ./  #use the current project relative to root
+    - name: The generated report
+      run: echo "The report is ${{ steps.xunit-viewer.outputs.report-file }}"    
+    - name: Test
+      run: |
+          [ ${{ steps.xunit-viewer.outputs.report-file }} == "AxolotlUnitTests/TestResults/TestResults.xml" ]
+    - name: Attach the report
+      if: always()
+      uses: actions/upload-artifact@v1
+      with:
+        name: TestResults
+        path: ${{ steps.xunit-viewer.outputs.report-dir }}
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
