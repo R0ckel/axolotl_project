@@ -38,10 +38,12 @@
                         </td>
                         <td>
                             <a asp-action="ShowPost" asp-route-postId="@item.Id">Open</a>
-                            <a asp-action="EditPost" asp-route-id="@item.Id">Edit</a> 
-                            <form method="post" asp-action="DeletePost" asp-route-postId="@item.Id" style="display:inline-block">
-                                <input type="submit" value="Delete"/>
-                            </form>
+                            @if(item.UserId == ViewBag.ViewerId) {
+                                <a asp-action="EditPost" asp-route-id="@item.Id">Edit</a> 
+                                <form method="post" asp-action="DeletePost" asp-route-postId="@item.Id" style="display:inline-block">
+                                    <input type="submit" value="Delete"/>
+                                </form>
+                            }
                         </td>
                     </tr>
                 }
