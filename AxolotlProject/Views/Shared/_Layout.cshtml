@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Axolotl Project</title>
+    <link rel="stylesheet" href="~/css/create_post.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/layout.css" />
 
 </head>
@@ -26,7 +27,9 @@
         </div>
     </header>
 
-    @RenderBody()
+    <content>
+        @RenderBody()
+    </content>
 
     <footer class="footer__container">
         <div class="footer__inner">

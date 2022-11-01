@@ -1,0 +1,120 @@
+﻿@using AxolotlProject.Models
+@model UserPost
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Axolotl Project | Post</title>
+    <script src="https://kit.fontawesome.com/e101ba82dd.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/post.css" asp-append-version="true"/>
+</head>
+<body>
+<div id="page-container">
+    <div class="main-container">
+        <div class="main-container__left">
+            <div class="left__container">
+                <div class="post-block">
+                    <div class="post-block__title">
+                        <span class="header-text">@Model.Heading</span>
+                    </div>
+                    <div class="post">
+                        <div class="post-text"><span>
+                            @Model.Content
+                        </span></div>
+                        <div class="post-reactions">
+                            <div class="like">
+                                <i class="fa-solid fa-thumbs-up reaction"></i>
+                            </div>
+                            <div class="number">
+                                @Model.CountRating()
+                            </div>
+                            <div class="dislike">
+                                <i class="fa-solid fa-thumbs-down reaction"></i>
+                            </div>
+                                @*
+                                    ADD EDITING AND DELETING FITURE
+                                    IF IT`S USER`S POST
+                                *@
+                        </div>
+                    </div>
+                    <div class="post-info">
+                        <div><span>Category: @Model.PostCategory</span></div>
+                        <div>
+                            <span>
+                                @* Tags: @Model.GetTagsAsString() *@
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-block">
+                    <div class="comment-block__title">
+                        <span class="header-text">Comments</span>
+                    </div>
+                    @*
+                        form for adding new comments
+                    *@
+                    <form method="post" asp-controller="UserPost" asp-action="CreateComment" 
+                        asp-route-postId=@Model.Id>
+                        <p>
+                            <label for="commentContent">Create comment:</label>
+                        </p>
+                        <textarea name="commentContent" rows="4" cols="50" required>Some text</textarea>
+                        <p>
+                            <input type="submit" value="Add Comment"/>
+                        </p>
+                    </form>
+
+                    <div class="comments">
+                        <div class="comments-text">
+                            @foreach (var comment in ViewBag.Comments){
+                                <div class="commentBlock">
+                                    <h3>@ViewBag.CommentsOwners[comment.Id]</h3>
+                                    @comment.Content
+                                </div>
+                                <div class="commentManagement">
+                                    @if(User.Identity.IsAuthenticated && comment.UserId == ViewBag.ViewerId){
+                                        <a asp-action="EditComment" asp-route-id="@comment.Id" style="display:inline-block"><button>Edit</button></a>
+                                        <form method="post" asp-controller="UserPost" asp-action="DeleteComment" 
+                                        asp-route-postId=@Model.Id asp-route-commentId=@comment.Id style="display:inline-block">
+                                            <input type="submit" value="Delete Comment"/>
+                                        </form>
+
+                                            @*                                                
+                                                ADD REACTIONS -> Sprint #4
+                                            *@
+                                    }
+                                </div>
+                                <hr />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-container__right">
+            <div class="right__container-information">
+                <div class="information__title">
+                    <span class="header-text">Author</span>
+                </div>
+                <hr>
+                <h2>@ViewBag.PostOwner?.Login</h2>
+                Has @ViewBag.OwnerPostsAmount post(s)
+            </div>
+            <div class="right__container-category">
+                <div class="category__title">
+                    <span class="header-text category">Related to this category</span>
+                </div>
+                <hr>
+                @*Some posts, added to the view model, close by tags etc
+                    -> SPRINT #4
+                *@
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

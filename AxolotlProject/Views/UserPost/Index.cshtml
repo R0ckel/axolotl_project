@@ -1,0 +1,62 @@
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model IEnumerable<AxolotlProject.Models.UserPost>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main-container">
+    <div class="main-container__container">
+        <div class="row">       
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Heading)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PostCategory)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.User)
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Heading)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PostCategory)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.Login)
+                        </td>
+                        <td>
+                            <a asp-action="ShowPost" asp-route-postId="@item.Id">Open</a>
+                            @if(item.UserId == ViewBag.ViewerId) {
+                                <a asp-action="EditPost" asp-route-id="@item.Id">Edit</a> 
+                                <form method="post" asp-action="DeletePost" asp-route-postId="@item.Id" style="display:inline-block">
+                                    <input type="submit" value="Delete"/>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <a asp-action="CreatePost">Create</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

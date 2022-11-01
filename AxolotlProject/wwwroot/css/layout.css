@@ -2,6 +2,20 @@
     margin: 0;
     padding: 0;
 }
+
+html, body {
+    height: 100%;
+}
+
+content {
+    flex: 1 0 auto;
+    min-height: calc(100%-100px);
+}
+
+#page-container{
+    min-height:100%;
+}
+
 .header__container {
     background-color: #000000;
     width: 80%;
@@ -25,7 +39,8 @@ i {
 
 .header__inner {
     position: relative;
-    top: 20%;
+    height: 100%;
+    padding: 1vh;
 }
 .inner__left {
     float: left;
