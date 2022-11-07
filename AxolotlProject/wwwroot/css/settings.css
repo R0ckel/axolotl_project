@@ -6,15 +6,24 @@
     --white-color: #FFFFFF;
     --darker-color: #ccc;
 }
-body {
+
+html, body {
+    height: fit-content;
+}
+
+.settings-body {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 95vh;
+    height: calc(100vh - 150px);
     margin: -20px 0 50px;
     background-repeat: repeat;
     background-position: center;
+}
+
+footer{
+    display: none;
 }
 
 .main-frame {
@@ -23,7 +32,7 @@ body {
     box-shadow: 4px 3px 6px -1px rgba(158, 158, 158, 0.39);
     position: relative;
     overflow: hidden;
-    width: 50%;
+    width: 90%;
     min-height: 65%;
 }
 .text-part {
@@ -55,7 +64,7 @@ body {
 .tab-part {
     height: 75%;
     border-right: 1px solid var(--darker-color);
-    border-left: 1px solid var(--darker-color);;
+    border-left: 1px solid var(--darker-color);
 }
 .tab {
     width: 25%;
@@ -107,11 +116,12 @@ button, .button {
     background-color: var(--darker-color);
     display: inline-block;
     border-radius: 16px;
-    margin-top: 10px;
+    margin: 10px auto 0;
     cursor: pointer;
     color: var(--black-color);
     font-size: 14px;
     font-family: "Times New Roman";
+    width: fit-content;
 }
 .buttons a {
     text-decoration: none;
@@ -125,23 +135,23 @@ button, .button {
 }
 @media (max-width: 1100px) {
     .main-frame {
-        min-height: 85%;
+        min-height: 65%;
     }
 }
 @media (max-width: 900px) {
     .main-frame {
-        min-height: 45%;
+        min-height: 65%;
     }
 }
 @media (max-width: 780px) {
     .main-frame {
-        min-height: 55%;
+        min-height: 65%;
     }
 }
 @media (max-width: 649px) {
     .main-frame {
         width: 85%;
-        min-height: 75%;
+        min-height: 65%;
     }
     .header-text {
         font-size: 20px;
@@ -154,21 +164,21 @@ button, .button {
 }
 @media (max-width: 450px) {
     .main-frame {
-        min-height: 60%;
+        min-height: 65%;
     }
 }
 @media (max-width: 420px) {
     .main-frame {
-        min-height: 55%;
+        min-height: 65%;
     }
 }
 @media (max-width: 370px) {
     .main-frame {
-        min-height: 67%;
+        min-height: 65%;
     }
 }
 @media (max-width: 290px) {
     .main-frame {
-        min-height: 87%;
+        min-height: 65%;
     }
 }

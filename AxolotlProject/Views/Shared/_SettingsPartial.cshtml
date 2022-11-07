@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using AxolotlProject.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Settings" title="Profile">
+        <i class="fa-solid fa-gears"></i>
+    </a>
+}
+else
+{
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+        <i class="fa-solid fa-gears"></i>
+    </a>
+}

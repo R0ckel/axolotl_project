@@ -38,10 +38,12 @@ i {
     margin: 60px auto 10px;
     z-index: 100;
 }
+#main-grid {
+    margin: 0px auto;
+}
 
 @media (max-width: 579px) {
     #main-grid {
-        margin: 50px auto 12px;
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 130px 370px 470px 570px 200px;
@@ -53,7 +55,7 @@ i {
     }
 
     .main-grid__item3 {
-        background-image: url(../../wwwroot/img/axolotl.jpg);
+        background-image: url(/img/axolotl.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -103,13 +105,14 @@ i {
     #main-grid__creators > button {
         margin-top: 0 !important;
     }
-    input[type="email"]{
+
+    input[type="email"] {
         width: 220px !important;
     }
 }
+
 @media (min-width: 580px) and (max-width: 949px) {
     #main-grid {
-        margin: 50px auto 12px;
         display: grid;
         width: 540px;
         grid-template-columns: 1fr;
@@ -127,7 +130,7 @@ i {
     }
 
     .main-grid__item3 {
-        background-image: url(../../wwwroot/img/axolotl.jpg);
+        background-image: url(/img/axolotl.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -177,13 +180,14 @@ i {
         grid-column-gap: 23px;
         margin: 5px auto 30px;
     }
+
     #main-grid__creators > button {
         margin-top: 0 !important;
-     }
+    }
 }
+
 @media (min-width: 950px) {
     #main-grid {
-        margin: 50px auto 12px;
         display: grid;
         width: 750px;
         grid-template-columns: repeat(2, 1fr);
@@ -191,6 +195,7 @@ i {
         grid-column-gap: 8px;
         grid-row-gap: 10px;
     }
+
     .main-grid__item1 {
         grid-area: 1 / 1 / 2 / 3;
     }
@@ -201,7 +206,7 @@ i {
 
     .main-grid__item3 {
         grid-area: 2 / 2 / 3 / 3;
-        background-image: url(../../wwwroot/img/axolotl.jpg);
+        background-image: url(/img/axolotl.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -214,6 +219,7 @@ i {
     .main-grid__item5 {
         grid-area: 4 / 1 / 5 / 3;
     }
+
     #main-grid__creators {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -222,6 +228,7 @@ i {
         margin: 5px auto 50px;
     }
 }
+
 #main-grid > div {
     background-color: #ebebeb;
     border-radius: 30px;
@@ -252,6 +259,9 @@ button, input[type="submit"] {
     margin-top: 15px;
     box-shadow: 2px 5px 7px 1px rgba(158,158,158,0.53);
 }
+button{
+    height: fit-content;
+}
 #main-grid__creators > div {
     border-radius: 50%;
     background-color: white;
@@ -264,7 +274,7 @@ button, input[type="submit"] {
     background-position: center;
 }
 input[type="submit"] {
-    background-image: url(../../wwwroot/img/mail.png);
+    background-image: url(/img/mail.png);
     background-repeat: no-repeat;
     background-size: 54%;
     background-position: center;
@@ -283,14 +293,14 @@ input[type="email"] {
     font-size: 90%;
 }
 #creator-1 {
-    background-image: url(../../wwwroot/img/creator1.jpg);
+    background-image: url(/img/creator1.jpg);
 }
 #creator-2 {
-    background-image: url(../../wwwroot/img/creator1.jpg);
+    background-image: url(/img/creator2.jpg);
 }
 #creator-3 {
-    background-image: url(../../wwwroot/img/creator1.jpg);
+    background-image: url(/img/creator3.jpg);
 }
 #creator-4 {
-    background-image: url(../../wwwroot/img/creator1.jpg);
+    background-image: url(/img/creator4.jpg);
 }

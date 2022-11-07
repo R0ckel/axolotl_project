@@ -1,4 +1,6 @@
-﻿namespace AxolotlProject.Models;
+﻿using System;
+
+namespace AxolotlProject.Models;
 
 public class UserPost
 {
@@ -11,6 +13,7 @@ public class UserPost
     public User? User { get; set; }
     public List<Comment>? Comments { get; set; }
     public List<PostMark>? Marks { get; set; }
+    //public List<string>? Tags { get; set; }  //add in DB context
 
     public int CountRating()
     {
@@ -25,5 +28,24 @@ public class UserPost
             else count--;
         }
         return count;
+    }
+
+    public string GetShortContent(int size=500)
+    {
+        if (!string.IsNullOrEmpty(Content))
+        {
+            if (Content.Length > size)
+            {
+                return string.Concat(Content.AsSpan(0, size), "...");
+            }
+            return Content;
+        }
+        return "No content";
+    }
+
+    public Comment? GetLastComment()
+    {
+        if (Comments == null || Comments.Count == 0) return null;
+        return Comments[Comments.Count - 1];
     }
 }

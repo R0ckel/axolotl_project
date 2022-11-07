@@ -23,9 +23,7 @@ i {
     z-index: 100;
 }
 .main-container {
-    width: 75%;
-    margin: 60px auto 30px;
-    min-height: 100%;
+    
 }
 .main-container__container {
     background-color: #ebebeb;

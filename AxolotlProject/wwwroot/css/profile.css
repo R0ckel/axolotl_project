@@ -59,7 +59,7 @@ button, input[type="submit"] {
     background-position: center;
 }
 #main-grid {
-    margin: 50px auto 12px;
+    margin: 0px auto 12px;
     display: grid;
     width: 750px;
     grid-template-columns: repeat(2, 1fr);

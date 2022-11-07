@@ -10,6 +10,8 @@ public class Comment
     public string? Content { get; set; }
     public List<CommentMark>? CommentMarks { get; set; }
 
+    //public DateTime? Created { get; set; } //UPDATE DB CONTEXT
+
     public void DeleteSelf()
     {
         User?.Comments?.Remove(this);

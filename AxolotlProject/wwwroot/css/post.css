@@ -14,18 +14,6 @@ i {
     color: #ffffff;
     font-size: 22px;
 }
-.inner__left {
-    float: left;
-    display: inline-flex;
-    padding-left: 30px;
-}
-.inner__right {
-    float: right;
-    display: inline-flex;
-    justify-content: space-between;
-    padding-right: 30px;
-    width: 150px;
-}
 .content-wrap {
     text-align: justify;
     flex: 1 0 auto;
@@ -37,8 +25,7 @@ i {
     margin-top: 10px;
 }
 .main-container {
-    width: 70%;
-    margin: 60px auto 30px;
+    margin-bottom: 10px;
     min-height: 100%;
     display: flex;
     flex-direction: row;
@@ -82,20 +69,30 @@ i {
 }
 .post-text {
     width: 85%;
-    background-color: white;
     border-radius: 12px;
-    min-height: 200px;
+    text-align: justify;
 }
 i.reaction {
     color: black;
     font-size: 180%;
     cursor: pointer;
 }
-.post-reactions {
+.post-reactions, comment-reactions {
     display: flex;
     flex-direction: column;
     align-items: center;
     row-gap: 10px;
+}
+.comment-reactions {
+    float: right;
+    text-align: center;
+}
+.comment-reactions a{
+    text-decoration: none;
+    color: black;
+}
+.comment-content{
+    width: 90%;
 }
 .post-info {
     display: flex;
@@ -104,10 +101,14 @@ i.reaction {
     padding: 10px;
     font-size: 20px;
 }
+.commentForm {
+    width: 95%;
+    margin: 0px auto;
+}
 .comments {
     width: 95%;
-    background-color: white;
-    border-radius: 12px;
+    /* background-color: white; */
+    /* border-radius: 12px; */
     min-height: 250px;
     text-align: left;
     margin: 20px auto;
@@ -118,22 +119,25 @@ i.reaction {
     padding: 10px;
     min-height: 5vh;
     text-align: left;
-    border: 2px solid gray
+    border: 2px solid gray;
+    display: flex;
+    justify-content: space-around;
 }
 textarea{
     resize: vertical;
     width: 100%;
 }
 .commentManagement{
-    text-align: center;
-    width: 10%;
+    display:flex;
+    justify-content:space-evenly;
+}
+.commentManagement > *{
+    margin: 10px;
+    width: 50%;
 }
 
 hr {
-    background-color: white;
-    color: white;
     height: 2px;
-    border: none;
     margin: 5px 0;
 }
 

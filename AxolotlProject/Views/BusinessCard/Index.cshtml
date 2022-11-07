@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/business_card.css" />
+
+<div id="main-grid">
+    <div class="main-grid__item1">
+        <img src="~/img/arrow.png" alt="arrow" style="width: 22px; height: 22px;" />
+        <span class="heading-big">Axolotl's Answers</span><br />
+        <span class="heading-medium">Social question-and-answer website</span>
+    </div>
+    <div class="main-grid__item2 heading-small">
+        <span>Welcome to Axolotl's Answers, Q&A service founded in Mykolaiv, Ukraine by four CS students from Petro Mohyla Black Sea National University as a project for one of the disciplines. Axolotl's Answers is a place of knowledge, a real treasue for those ones, who likes diving deep into the well of info from every topic they're interested in. The most efficient path to figuring out the way our world works lies through communication, and that's why we offer you to join Axolotl's Answers and become one of those smart and sociable axolotls, inhabiting this service.</span>
+        <button>Join Us</button>
+    </div>
+    <div class="main-grid__item3">
+    </div>
+    <div class="main-grid__item4 heading-small">
+        <div id="main-grid__creators">
+            <div id="creator-1" class="main-grid__creators__item1"></div>
+            <div id="creator-2" class="main-grid__creators__item2"></div>
+            <div id="creator-3" class="main-grid__creators__item3"></div>
+            <div id="creator-4" class="main-grid__creators__item4"></div>
+            <button onclick="location.href='https://t.me/Great_Rockel'" class="main-grid__creators__item5">Roman Koshovyi</button>
+            <button onclick="location.href='https://t.me/sylphmish'" class="main-grid__creators__item6">Yelyzaveta Kostiuk</button>
+            <button onclick="location.href='https://t.me/xmxhsoefj'" class="main-grid__creators__item7">Nikita Kliatskyi</button>
+            <button onclick="location.href='https://t.me/sjkhu'" class="main-grid__creators__item8">Milana Kovalenko</button>
+        </div>
+        <span class="heading-medium">Subscribe to the newsletter!</span>
+        <form>
+            <input type="email" id="email-address" name="email-address" placeholder="Example: yourmail@gmail.com" required />
+            <input type="submit" id="subscribe-button" style="position: relative; top: 12px;" value="" />
+        </form>
+    </div>
+    <div class="main-grid__item5"></div>
+</div>

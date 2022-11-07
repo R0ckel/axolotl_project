@@ -1,18 +1,8 @@
 ﻿@using AxolotlProject.Models
 @model UserPost
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Axolotl Project | Post</title>
-    <script src="https://kit.fontawesome.com/e101ba82dd.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="~/css/post.css" asp-append-version="true"/>
-</head>
-<body>
+<link rel="stylesheet" href="~/css/post.css" asp-append-version="true" />
+
 <div id="page-container">
     <div class="main-container">
         <div class="main-container__left">
@@ -54,11 +44,8 @@
                     <div class="comment-block__title">
                         <span class="header-text">Comments</span>
                     </div>
-                    @*
-                        form for adding new comments
-                    *@
                     <form method="post" asp-controller="UserPost" asp-action="CreateComment" 
-                        asp-route-postId=@Model.Id>
+                        asp-route-postId=@Model.Id class="commentForm">
                         <p>
                             <label for="commentContent">Create comment:</label>
                         </p>
@@ -72,20 +59,29 @@
                         <div class="comments-text">
                             @foreach (var comment in ViewBag.Comments){
                                 <div class="commentBlock">
-                                    <h3>@ViewBag.CommentsOwners[comment.Id]</h3>
-                                    @comment.Content
+                                    <div class="comment-content">
+                                        <h3>@ViewBag.CommentsOwners[comment.Id]</h3>
+                                        @comment.Content
+                                    </div>
+                                    <div class="comment-reactions">
+                                        <div class="like">
+                                            <a href="#">&#9650</a> @*or &#9651*@
+                                        </div>
+                                        <div class="number">
+                                            @Model.CountRating()
+                                        </div>
+                                        <div class="dislike">
+                                            <a href="#">&#9660</a> @*or &#9661*@
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="commentManagement">
                                     @if(User.Identity.IsAuthenticated && comment.UserId == ViewBag.ViewerId){
                                         <a asp-action="EditComment" asp-route-id="@comment.Id" style="display:inline-block"><button>Edit</button></a>
-                                        <form method="post" asp-controller="UserPost" asp-action="DeleteComment" 
-                                        asp-route-postId=@Model.Id asp-route-commentId=@comment.Id style="display:inline-block">
+                                            <form style="display:inline-block" method="post" asp-controller="UserPost" asp-action="DeleteComment"
+                                          asp-route-postId=@Model.Id asp-route-commentId=@comment.Id style="display:inline-block">
                                             <input type="submit" value="Delete Comment"/>
                                         </form>
-
-                                            @*                                                
-                                                ADD REACTIONS -> Sprint #4
-                                            *@
                                     }
                                 </div>
                                 <hr />
@@ -116,5 +112,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>

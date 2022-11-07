@@ -43,6 +43,7 @@ namespace AxolotlProject.Controllers
             {
                 post.User = user;
                 post.UserId = user.Id;
+                //post.CreationTime = DateTime.Now; //UPDATE DB MIGRATIONS
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

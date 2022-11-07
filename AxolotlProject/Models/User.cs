@@ -51,4 +51,20 @@ public class User : IdentityUser
         }
         return rating;
     }
+
+    public UserPost? FindLastCommentedPost() //COMMENT CREATED property must be added
+    {
+        if (Posts is null || Posts.Count == 0) return null;
+        UserPost? lastCommented = Posts.FirstOrDefault(p=>p?.Comments?.Count>0, null);
+        if (lastCommented == null) return null;
+        foreach (var post in Posts)
+        {
+            //if (lastCommented.GetLastComment()?.Created < post.GetLastComment()?.Created) 
+            //uncomment this after Comment.Created property added
+            {
+                lastCommented = post;
+            }
+        }
+        return lastCommented;
+    }
 }
