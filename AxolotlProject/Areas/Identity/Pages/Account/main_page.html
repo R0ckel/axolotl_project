@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Axolotl Project | Main</title>
+    <script src="https://kit.fontawesome.com/e101ba82dd.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../../../wwwroot/css/main_page.css" asp-append-version="true"/>
+</head>
+<body>
+<div id="page-container">
+    <div class="information__title posts-header">
+        <span class="header-text">Posts</span>
+        <hr>
+        <div style="margin: 20px 5px 5px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+    </div>
+    <div class="main-container">
+        <div class="main-container__left">
+            <div class="left__container">
+                <div style="width: 95%; margin: 15px auto 5px;">
+                    <input type="text" placeholder="Search by name" />
+                    <button>Search</button>
+                </div>
+                <div class="filters">
+                    <div>Popular tags: #blackcat #cat</div>
+                    <div class="dropdown">
+                        <button style="width: 100%; margin-top: -20px">Filter by category</button>
+                        <div class="dropdown-content">
+                            <ul>
+                                <li>Hello</li>
+                                <li>World</li>
+                            </ul>
+                        </div>
+                    </div>
+                    Search by:
+                        <input type="checkbox" id="name_search" name="search" value="name" />
+                        <label for="name_search">name</label>
+                        <input type="checkbox" id="author_search" name="search" value="author" />
+                        <label for="author_search">author</label>
+                        <input type="checkbox" id="tags_search" name="search" value="tags" />
+                        <label for="tags_search">tags</label>
+                </div>
+                <div class="pages">
+                    <a class="arrow">&#8592;</a>
+                    <span>1</span>
+                    <a class="arrow">&#8594;</a>
+                    | <a href="#">Popular</a> | <a href="#">Commented</a> | <a href="#">My posts</a>
+                </div>
+                <div class="posts-blocks">
+                    <div class="posts-block">
+                        <div style="padding-top: 15px;"><h2><a href="#">Title</a></h2></div>
+                        <div style="display: inline-block;">20.05.2022 15:47</div>
+                        <div style="float: right;"><a href="#">@tom2007</a> [1120 <i class="fa-solid fa-thumbs-up reaction"></i> ]</div>
+                        <div>
+                            <a href="#">#cat</a> 
+                            <a href="#">#blackcat</a>
+                        </div>
+                        <div style="padding: 5px; margin: 15px 30px; border: 1px solid #d8d8d8; background-color: #cfcfcf; border-radius: 6px;">Question about black cat</div>
+                        <div style="padding-bottom: 15px; display: inline-block;"><a href="#">Answers: 1</a></div>
+                        <div class="thumbs">
+                            <i class="fa-solid fa-thumbs-up reaction"></i><span class="like-number" style="margin-right: 12px;">10</span>
+                            <i class="fa-solid fa-thumbs-down reaction"></i><span class="like-number">5</span>
+                        </div>
+                    </div>
+                    <div class="posts-block">
+                        --
+                    </div>
+                    <div class="posts-block">
+                        --
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="main-container__right">
+            <div class="right__container-information">
+                <div class="information__title">
+                    <span class="header-text">Creator's panel</span>
+                </div>
+                <hr>
+                    <div style="text-align: left; margin: 10px;">Last post: none</div>
+                    <div style="text-align: left; margin: 10px;">Last commented: /link name/</div>
+                    <button class="btn-rect">Create post</button>
+                    <button class="btn-rect">Manage my posts and answers</button>
+            </div>
+            <div class="right__container-category">
+                <div class="category__title">
+                    <span class="header-text category">Categories</span>
+                </div>
+                <hr>
+                
+            </div>
+            <div class="right__container-author">
+                <div class="authors_title">
+                    <span class="header-text authors">Top authors</span>
+                </div>
+                <hr>
+                
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
