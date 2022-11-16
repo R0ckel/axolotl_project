@@ -16,15 +16,15 @@
                             @Model.Content
                         </span></div>
                         <div class="post-reactions">
-                            <div class="like">
+                            <a class="like" asp-action="MarkPost" asp-route-postId="@Model.Id" asp-route-mark="true">
                                 <i class="fa-solid fa-thumbs-up reaction"></i>
-                            </div>
+                            </a>
                             <div class="number">
-                                @Model.CountRating()
+															@(ViewBag.Rating??0)
                             </div>
-                            <div class="dislike">
+                            <a class="dislike" asp-action="MarkPost" asp-route-postId="@Model.Id" asp-route-mark="false">
                                 <i class="fa-solid fa-thumbs-down reaction"></i>
-                            </div>
+                            </a>
                                 @*
                                     ADD EDITING AND DELETING FITURE
                                     IF IT`S USER`S POST
@@ -61,17 +61,20 @@
                                 <div class="commentBlock">
                                     <div class="comment-content">
                                         <h3>@ViewBag.CommentsOwners[comment.Id]</h3>
+																				@comment.CreationTime<br/>
                                         @comment.Content
                                     </div>
                                     <div class="comment-reactions">
                                         <div class="like">
-                                            <a href="#">&#9650</a> @*or &#9651*@
+                                            <a asp-action="MarkComment" asp-route-commentId="@comment.Id" asp-route-mark="true">
+																							&#9650
+																						</a>
                                         </div>
                                         <div class="number">
-                                            @Model.CountRating()
+                                            @ViewBag.CommentsRating[comment.Id]
                                         </div>
                                         <div class="dislike">
-                                            <a href="#">&#9660</a> @*or &#9661*@
+                                            <a asp-action="MarkComment" asp-route-commentId="@comment.Id" asp-route-mark="false">&#9660</a> @*or &#9661*@
                                         </div>
                                     </div>
                                 </div>

@@ -9,8 +9,7 @@ public class Comment
     public UserPost? Post { get; set; }
     public string? Content { get; set; }
     public List<CommentMark>? CommentMarks { get; set; }
-
-    //public DateTime? Created { get; set; } //UPDATE DB CONTEXT
+    public DateTime CreationTime { get; set; } = DateTime.Now;
 
     public void DeleteSelf()
     {

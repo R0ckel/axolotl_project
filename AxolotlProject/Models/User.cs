@@ -41,6 +41,9 @@ public class User : IdentityUser
     [PersonalData]
     public List<CommentMark>? CommentMarks { get; set; }
 
+    [PersonalData]
+    public DateTime RegistrationTime { get; set; } = DateTime.Now;
+
     public int GetUserRating()
     {
         if(Posts == null) return 0;

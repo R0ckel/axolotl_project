@@ -19,12 +19,50 @@ namespace AxolotlProject.Controllers
             _context = context;
             _userManager = userManager;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search, string? category, int num, bool nameSearch = false, bool authorSearch = false, bool tagsSearch = false, string? addFilt = null)
         {
-            IEnumerable<UserPost> result = await _context.UserPosts!.ToListAsync();
+            List<UserPost> result = await _context.UserPosts!.ToListAsync();
+            if (category is not null)
+                result = result.Where(post => post.PostCategory!.ToString().Equals(category)).ToList();
+            if (search is not null)
+            {
+                result = result.Where(post =>
+                    (nameSearch && post.Heading is not null && (post.Heading!.Trim().ToLower().Contains(search.Trim().ToLower()) || search.Trim().ToLower().Contains(post.Heading.Trim().ToLower()))) ||
+                    (authorSearch && _context.Users?.Find(post.UserId) is not null && (post.User!.Login!.Trim().ToLower().Contains(search.Trim().ToLower()) || search.Trim().ToLower().Contains(post.User.Login.Trim().ToLower()))) ||
+                    (tagsSearch && post.Tags.Any(t => t.Trim().ToLower().Contains(search.Trim().ToLower()) || search.Trim().ToLower().Contains(t.Trim().Remove(0, 1).ToLower()))))
+                .ToList();
+            }
             var user = await _userManager.GetUserAsync(HttpContext.User);
+
             ViewBag.ViewerId = user?.Id;
-            return View(result);
+            ViewBag.Search = search;
+            ViewBag.Category = category;
+            ViewBag.NameSearch = nameSearch;
+            ViewBag.AuthorSearch = authorSearch;
+            ViewBag.TagsSearch = tagsSearch;
+            ViewBag.Num = num;
+            ViewBag.AddFilt = addFilt;
+            ViewBag.CommentsAmount = result.ToDictionary(p => p.Id, p => _context.Comments?.Where(comment => comment.PostId.Equals(p.Id)).Count());
+            ViewBag.Rating = result.ToDictionary(p => p.Id,
+                                p => _context.PostsMarks?
+                                        .Where(m => m.PostId.Equals(p.Id))
+                                        .Select(m => m.Liked ? 1 : -1).AsEnumerable()
+                                        .Aggregate(0, (x, y) => x + y));
+
+            if (addFilt is not null)
+            {
+                if (addFilt.Equals("popular")) result = result.Where(p => ViewBag.Rating[p.Id] >= 5).ToList();
+                else if (addFilt.Equals("commented")) result = result.Where(p => ViewBag.CommentsAmount[p.Id] > 0).ToList();
+                else if (addFilt.Equals("my")) result = result.Where(p => p.UserId!.Equals(user?.Id)).ToList();
+            }
+
+            int postsAmount = 5;
+            num = num < 0 ? 0 : num;
+            num = num > (result.Count - 1) / postsAmount ? (result.Count - 1) / postsAmount : num;
+            int left = num * postsAmount,
+                right = (left + postsAmount) is int r && r < result.Count ? r : result.Count;
+
+            return View(result.ToArray<UserPost>()[left..right]);
         }
 
         [Authorize]
@@ -69,7 +107,8 @@ namespace AxolotlProject.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == id);
             if (id != post?.Id) return NotFound();
-            if(user.Id == post?.UserId) {
+            if (user.Id == post?.UserId)
+            {
                 post.Heading = Heading;
                 post.Content = Content;
                 post.PostCategory = PostCategory;
@@ -85,8 +124,9 @@ namespace AxolotlProject.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == postId);
-            if(user == null || post == null) return NotFound();
-            if(user.Id == post.UserId) {
+            if (user == null || post == null) return NotFound();
+            if (user.Id == post.UserId)
+            {
                 _context.Remove(post);
                 await _context.SaveChangesAsync();
             }
@@ -113,10 +153,25 @@ namespace AxolotlProject.Controllers
             var commentsOwners = new Dictionary<Guid, string?>();
             var user = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.ViewerId = user?.Id;
-            foreach (var item in ViewBag.Comments) {
+            foreach (var item in ViewBag.Comments)
+            {
                 commentsOwners.Add(item.Id, _context.Users?.Find(item.UserId).Login);
             }
             ViewBag.CommentsOwners = commentsOwners;
+            ViewBag.CommentsRating = _context.Comments?.Where(c => c.PostId.Equals(postId))
+                .ToDictionary(
+                        c => c.Id,
+                        c => _context.CommentsMarks?
+                            .Where(mark => mark.CommentId.Equals(c.Id))
+                            .Select(mark => mark.Liked ? 1 : -1).AsEnumerable()
+                            .Aggregate(0, (x, y) => x + y)
+                        );
+
+            ViewBag.Rating = _context.PostsMarks?
+                .Where(m => m.PostId.Equals(postId))
+                .Select(m => m.Liked ? 1 : -1).AsEnumerable()
+                .Aggregate(0, (x, y) => x + y);
+
             return View(post);
         }
 
@@ -126,7 +181,7 @@ namespace AxolotlProject.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == postId);
-            if(user == null || post == null) return NotFound();
+            if (user == null || post == null) return NotFound();
             var comment = new Comment()
             {
                 Id = Guid.NewGuid(),
@@ -170,8 +225,9 @@ namespace AxolotlProject.Controllers
         {
             var comment = await _context.Comments!.FirstOrDefaultAsync(p => p.Id == id);
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            if(comment == null) return NotFound();
-            if(user.Id == comment.UserId) {
+            if (comment == null) return NotFound();
+            if (user.Id == comment.UserId)
+            {
                 comment.Content = Content;
                 _context.Update(comment);
                 await _context.SaveChangesAsync();
@@ -185,13 +241,102 @@ namespace AxolotlProject.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var comment = await _context.Comments!.FirstOrDefaultAsync(p => p.Id == commentId);
-            if(user == null || comment == null) return NotFound();
-            if(comment.UserId == user.Id) {
+            if (user == null || comment == null) return NotFound();
+            if (comment.UserId == user.Id)
+            {
                 _context.Remove(comment);
                 comment.DeleteSelf();
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction("ShowPost", new { postId = postId });
         }
+
+        [Authorize]
+        [HttpGet, ActionName("MarkComment")]
+        public async Task<IActionResult> MarkComment(Guid? commentId, bool mark = true)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var comment = await _context.Comments!.FirstOrDefaultAsync(p => p.Id == commentId);
+            var marks = _context.CommentsMarks;
+            if (user == null || comment == null) return NotFound();
+            if (marks?.FirstOrDefault(m => m.UserId.Equals(Guid.Parse(user.Id)) && m.CommentId.Equals(comment.Id)) is var currentMark
+                    && currentMark is not null
+                    && !currentMark.Equals(default(CommentMark)))
+            {
+                if (mark.Equals(currentMark.Liked))
+                {
+                    comment.CommentMarks?.Remove(currentMark!);
+                    user.CommentMarks?.Remove(currentMark!);
+                    _context.CommentsMarks?.Remove(currentMark);
+                }
+                else
+                {
+                    currentMark.Liked = mark;
+                }
+            }
+            else
+            {
+                var commentMark = new CommentMark()
+                {
+                    User = user,
+                    UserId = Guid.Parse(user.Id),
+                    Comment = comment,
+                    CommentId = comment.Id,
+                    Liked = mark
+                };
+                comment.CommentMarks?.Add(commentMark);
+                user.CommentMarks?.Add(commentMark);
+                _context.Add(commentMark);
+
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction("ShowPost", new { postId = comment.PostId });
+        }
+
+
+        [Authorize]
+        [HttpGet, ActionName("MarkPost")]
+        public async Task<IActionResult> MarkPost(Guid? postId, bool mark = true)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == postId);
+            var marks = _context.PostsMarks;
+            if (user == null || post == null) return NotFound();
+            if (marks?.FirstOrDefault(m => m.UserId.Equals(Guid.Parse(user.Id)) && m.PostId.Equals(post.Id)) is var currentMark
+                    && currentMark is not null
+                    && !currentMark.Equals(default(PostMark)))
+            {
+                if (mark.Equals(currentMark.Liked))
+                {
+                    post.Marks?.Remove(currentMark!);
+                    user.PostMarks?.Remove(currentMark!);
+                    _context.PostsMarks?.Remove(currentMark);
+                }
+                else
+                {
+                    currentMark.Liked = mark;
+                }
+            }
+            else
+            {
+                var postMark = new PostMark()
+                {
+                    User = user,
+                    UserId = Guid.Parse(user.Id),
+                    Post = post,
+                    PostId = post.Id,
+                    Liked = mark
+                };
+                post.Marks?.Add(postMark);
+                user.PostMarks?.Add(postMark);
+                _context.Add(postMark);
+
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ShowPost), new { postId = postId });
+        }
+
+
+
     }
 }

@@ -3,6 +3,7 @@
 @inject IAuthorizationService AuthorizationService
 @model IEnumerable<AxolotlProject.Models.UserPost>
 
+
 <link rel="stylesheet" href="~/css/main_page.css" />
 @{
     ViewData["Title"] = "Index";
@@ -21,52 +22,116 @@
     <div class="main-container">
         <div class="main-container__left">
             <div class="left__container">
-                <div style="width: 95%; margin: 15px auto 5px;">
-                    <input type="text" placeholder="Search by name" />
-                    <button>Search</button> 
-                </div>
-                <div class="filters">
-                    <div>Popular tags: #blackcat #cat</div> @*CHANGE TAGS TO LAST USED OR SMTH*@
-                    <div class="dropdown">
-                        <button style="width: 100%; margin-top: -20px">Filter by category</button>
-                        <div class="dropdown-content">
-                            <ul class="link-list">
-                                @foreach (var cat in Enum.GetValues(typeof(PostCategory))){
-                                    <li><a href="#">@cat</a></li> //           ->    SEARCH BY TAG in href. Add tags
-                                }
-                            </ul>
-                        </div>
+                <form method="get">
+                    <div style="width: 95%; margin: 15px auto 5px;">
+                        <input type="text" name="search" placeholder="Search by name" value="@ViewBag.Search"/>
+                        <button type="submit">Search</button> 
                     </div>
-                    Search by:
-                    <input type="checkbox" id="name_search" name="search" value="name" />
-                    <label for="name_search">name</label>
-                    <input type="checkbox" id="author_search" name="search" value="author" />
-                    <label for="author_search">author</label>
-                    <input type="checkbox" id="tags_search" name="search" value="tags" />
-                    <label for="tags_search">tags</label>
-                </div>
-                <div class="pages">
-                    <a class="arrow">&#8592;</a>
-                    <span>1</span>
-                    <a class="arrow">&#8594;</a>
-                    | <a href="#">Popular</a> | <a href="#">Commented</a> | <a href="#">My posts</a>
-                </div>
+                    <div class="filters">
+                        <div>Popular tags: #blackcat #cat</div> @*CHANGE TAGS TO LAST USED OR SMTH*@
+                        <div class="dropdown">
+                            <button style="width: 100%; margin-top: -20px">Filter by category</button>
+                            <div class="dropdown-content">
+                                <ul class="link-list">
+                                    @foreach (var cat in Enum.GetValues(typeof(PostCategory))){
+                                        <li><a asp-action="Index" asp-route-search=@ViewBag.Search asp-route-category=@cat>@cat</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        Search by:
+                        @if(ViewBag.NameSearch) {
+                        <input type="checkbox" id="name_search" name="nameSearch" value=true checked />
+                        } else {
+                            <input type="checkbox" id="name_search" name="nameSearch" value=true />
+                        }
+                            <label for="name_search">name</label>
+                        @if(ViewBag.AuthorSearch) {
+                            <input type="checkbox" id="author_search" name="authorSearch" value=true checked />
+                        } else {
+                            <input type="checkbox" id="author_search" name="authorSearch" value=true />
+                        }
+                        <label for="author_search">author</label>
+                        @if(ViewBag.TagsSearch) {
+                            <input type="checkbox" id="tags_search" name="tagsSearch" value=true checked />
+                        } else {
+                            <input type="checkbox" id="tags_search" name="tagsSearch" value=true />
+                        }
+                        <label for="tags_search">tags</label>
+                    </div>
+                    <div class="pages">
+                        <a 
+                            asp-page="/Index"
+                            asp-route-search="@ViewBag.Search"
+                            asp-route-category="@ViewBag.Category"
+                            asp-route-nameSearch="@ViewBag.NameSearch"
+                            asp-route-authorSearch="@ViewBag.AuthorSearch"
+                            asp-route-num=@(ViewBag.Num - 1)
+                            asp-route-tagsSearch="@ViewBag.TagsSearch"
+														asp-route-addFilt="@ViewBag.AddFilt"
+                            class="arrow">&#8592;</a>
+                        <span>@ViewBag.Num</span>
+                        <a 
+                            asp-page="/Index"
+                            asp-route-search="@ViewBag.Search"
+                            asp-route-category="@ViewBag.Category"
+                            asp-route-nameSearch="@ViewBag.NameSearch"
+                            asp-route-authorSearch="@ViewBag.AuthorSearch"
+                            asp-route-num=@(ViewBag.Num + 1)
+                            asp-route-tagsSearch="@ViewBag.TagsSearch"
+														asp-route-addFilt="@ViewBag.AddFilt"
+                            class="arrow">&#8594;</a>
+                        | <a 
+                            asp-page="/Index"
+                            asp-route-search="@ViewBag.Search"
+                            asp-route-category="@ViewBag.Category"
+                            asp-route-nameSearch="@ViewBag.NameSearch"
+                            asp-route-authorSearch="@ViewBag.AuthorSearch"
+                            asp-route-num="@ViewBag.Num"
+                            asp-route-tagsSearch="@ViewBag.TagsSearch"
+														asp-route-addFilt="popular"
+													>Popular</a> | <a
+                            asp-page="/Index"
+                            asp-route-search="@ViewBag.Search"
+                            asp-route-category="@ViewBag.Category"
+                            asp-route-nameSearch="@ViewBag.NameSearch"
+                            asp-route-authorSearch="@ViewBag.AuthorSearch"
+                            asp-route-num="@ViewBag.Num"
+                            asp-route-tagsSearch="@ViewBag.TagsSearch"
+														asp-route-addFilt="commented"
+													>Commented</a> | <a 
+                            asp-page="/Index"
+                            asp-route-search="@ViewBag.Search"
+                            asp-route-category="@ViewBag.Category"
+                            asp-route-nameSearch="@ViewBag.NameSearch"
+                            asp-route-authorSearch="@ViewBag.AuthorSearch"
+                            asp-route-num="@ViewBag.Num"
+                            asp-route-tagsSearch="@ViewBag.TagsSearch"
+														asp-route-addFilt="my"
+													>My posts</a>
+                    </div>
+                </form>
                 <div class="posts-blocks">
-                    @foreach (var post in Model){
+                    @foreach(var post in Model) {
                         <div class="posts-block">
                             <div style="padding-top: 15px;"><h2><a asp-action="ShowPost" asp-route-postId="@post.Id">@post.Heading</a></h2></div>
                             <div style="display: inline-block;">@post.CreationTime</div>
                             <div style="float: right;"><a href="#">@post.User?.Login</a> [ @(post.User?.GetUserRating()??0) <i class="fa-solid fa-thumbs-up reaction"></i> ]</div>
                             <div>
-                                @* @foreach (var tag in post.Tags??new()){
-                                    <a href="#">#@tag</a>                       ->    SEARCH BY TAG in href. Add tags
-                                }*@
+															@foreach (var tag in post.Tags){
+																	<a asp-page="/Index" asp-route-search="@tag" asp-route-tagsSearch="true">@tag</a>
+                                }
                             </div>
                             <div style="padding: 5px; margin: 15px 30px; border: 1px solid #d8d8d8; background-color: #cfcfcf; border-radius: 6px;">@post.GetShortContent()</div>
-                            <div style="padding-bottom: 15px; display: inline-block;">@(post.Comments?.Count()??0) answers</div>
+                            <div style="padding-bottom: 15px; display: inline-block;">@(ViewBag.CommentsAmount[post.Id]??0) answers</div>
                             <div class="thumbs">
-                                <i class="fa-solid fa-thumbs-up reaction"></i><span class="like-number" style="margin-right: 12px;">@(post.Marks?.Select(r=>r.Liked).Count()??0)</span>
-                                <i class="fa-solid fa-thumbs-down reaction"></i><span class="like-number">@(post.Marks?.Select(r=>!r.Liked).Count()??0)</span>
+                            		<a asp-action="MarkPost" asp-route-postId="@post.Id" asp-route-mark="true" style="text-decoration: none;">
+																	<i class="fa-solid fa-thumbs-up reaction"></i>
+																</a>
+																	<span class="like-number" style="margin-right: 12px;">@(ViewBag.Rating[post.Id]??0)</span>
+                            		<a asp-action="MarkPost" asp-route-postId="@post.Id" asp-route-mark="false">
+																	<i class="fa-solid fa-thumbs-down reaction"></i>
+																</a>
                             </div>
                         </div>
                     }
