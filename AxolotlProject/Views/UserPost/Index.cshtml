@@ -68,7 +68,7 @@
                             asp-route-authorSearch="@ViewBag.AuthorSearch"
                             asp-route-num=@(ViewBag.Num - 1)
                             asp-route-tagsSearch="@ViewBag.TagsSearch"
-														asp-route-addFilt="@ViewBag.AddFilt"
+							asp-route-addFilt="@ViewBag.AddFilt"
                             class="arrow">&#8592;</a>
                         <span>@ViewBag.Num</span>
                         <a 
@@ -79,7 +79,7 @@
                             asp-route-authorSearch="@ViewBag.AuthorSearch"
                             asp-route-num=@(ViewBag.Num + 1)
                             asp-route-tagsSearch="@ViewBag.TagsSearch"
-														asp-route-addFilt="@ViewBag.AddFilt"
+							asp-route-addFilt="@ViewBag.AddFilt"
                             class="arrow">&#8594;</a>
                         | <a 
                             asp-page="/Index"
@@ -89,8 +89,8 @@
                             asp-route-authorSearch="@ViewBag.AuthorSearch"
                             asp-route-num="@ViewBag.Num"
                             asp-route-tagsSearch="@ViewBag.TagsSearch"
-														asp-route-addFilt="popular"
-													>Popular</a> | <a
+							asp-route-addFilt="popular"
+						>Popular</a> | <a
                             asp-page="/Index"
                             asp-route-search="@ViewBag.Search"
                             asp-route-category="@ViewBag.Category"
@@ -98,8 +98,8 @@
                             asp-route-authorSearch="@ViewBag.AuthorSearch"
                             asp-route-num="@ViewBag.Num"
                             asp-route-tagsSearch="@ViewBag.TagsSearch"
-														asp-route-addFilt="commented"
-													>Commented</a> | <a 
+							asp-route-addFilt="commented"
+						>Commented</a> | <a 
                             asp-page="/Index"
                             asp-route-search="@ViewBag.Search"
                             asp-route-category="@ViewBag.Category"
@@ -107,8 +107,8 @@
                             asp-route-authorSearch="@ViewBag.AuthorSearch"
                             asp-route-num="@ViewBag.Num"
                             asp-route-tagsSearch="@ViewBag.TagsSearch"
-														asp-route-addFilt="my"
-													>My posts</a>
+							asp-route-addFilt="my"
+						>My posts</a>
                     </div>
                 </form>
                 <div class="posts-blocks">
@@ -118,20 +118,20 @@
                             <div style="display: inline-block;">@post.CreationTime</div>
                             <div style="float: right;"><a href="#">@post.User?.Login</a> [ @(post.User?.GetUserRating()??0) <i class="fa-solid fa-thumbs-up reaction"></i> ]</div>
                             <div>
-															@foreach (var tag in post.Tags){
-																	<a asp-page="/Index" asp-route-search="@tag" asp-route-tagsSearch="true">@tag</a>
+								@foreach (var tag in post.Tags){
+									<a asp-page="/Index" asp-route-search="@tag" asp-route-tagsSearch="true">@tag</a>
                                 }
                             </div>
                             <div style="padding: 5px; margin: 15px 30px; border: 1px solid #d8d8d8; background-color: #cfcfcf; border-radius: 6px;">@post.GetShortContent()</div>
                             <div style="padding-bottom: 15px; display: inline-block;">@(ViewBag.CommentsAmount[post.Id]??0) answers</div>
                             <div class="thumbs">
-                            		<a asp-action="MarkPost" asp-route-postId="@post.Id" asp-route-mark="true" style="text-decoration: none;">
-																	<i class="fa-solid fa-thumbs-up reaction"></i>
-																</a>
-																	<span class="like-number" style="margin-right: 12px;">@(ViewBag.Rating[post.Id]??0)</span>
-                            		<a asp-action="MarkPost" asp-route-postId="@post.Id" asp-route-mark="false">
-																	<i class="fa-solid fa-thumbs-down reaction"></i>
-																</a>
+                            	<a asp-action="MarkPost" asp-route-postId="@post.Id" asp-route-mark="true" style="text-decoration: none;">
+									<i class="fa-solid fa-thumbs-up reaction"></i>
+								</a>
+								<span class="like-number" style="margin-right: 12px;">@(ViewBag.Rating[post.Id]??0)</span>
+                            	<a asp-action="MarkPost" asp-route-postId="@post.Id" asp-route-mark="false">
+									<i class="fa-solid fa-thumbs-down reaction"></i>
+								</a>
                             </div>
                         </div>
                     }
