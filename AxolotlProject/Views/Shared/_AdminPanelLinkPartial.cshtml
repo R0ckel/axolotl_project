@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using AxolotlProject.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User) @* && User => admin or moderator *@)
+{
+    <div class="inner">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index" title="Profile">
+        <i class="fa-solid fa-hammer"></i>
+    </a>
+    </div>
+}

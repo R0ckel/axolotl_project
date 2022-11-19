@@ -156,14 +156,6 @@ hr {
     margin: 0px auto 10px;
 }
 
-input {
-    border-radius: 30px;
-    padding: 12px 2%;
-    border: 1px solid black;
-    margin: 8px auto;
-    width: 96%;
-}
-
 button {
     border-radius: 30px;
     margin: 8px auto;
