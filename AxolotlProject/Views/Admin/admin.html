@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Axolotl Project | Admin Panel</title>
+    <script src="https://kit.fontawesome.com/e101ba82dd.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../wwwroot/css/admin.css">
+</head>
+<body>
+<div id="page-container">
+    <header class="header__container">
+        <div class="header__inner">
+            <span class="inner__left">
+                <div class="inner"><i class="fa-sharp fa-solid fa-bars"></i></div>
+            </span>
+            <span class="inner__right">
+                <div class="inner"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <div class="inner"><i class="fa-solid fa-user"></i></div>
+                <div class="inner"><i class="fa-regular fa-bell"></i></div>
+                <div class="inner"><i class="fa-solid fa-bookmark"></i></div>
+                <div class="inner"><i class="fa-solid fa-gears"></i></div>
+            </span>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="main__inner">
+            <div class="title">
+                <span class="header-text">Admin Panel</span>
+            </div>
+            <div class="card">
+                <div class="card__left">
+                    <img class="card__image" src="https://avatars.githubusercontent.com/u/63110747" alt="avatar">
+                </div>
+                <div class="card__right">
+                    <div class="right__top">
+                        <div class="user_name">[id: 1209] Pretty Username</div>
+                        <div class="role">category moderator</div>
+                    </div>
+                    <div class="right__bottom">
+                        <div>Category: Computer Science</div>
+                        <div>Warnings: 0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- u know wha to do!1 -->
+            <div class="title secondary-head">
+                <span class="header-text">Find User</span>
+            </div>
+            <div class="gogomilana">
+
+            </div>
+
+            <!-- blocks for banned users -->
+            <div class="title secondary-head">
+                <span class="header-text">Banned Users</span>
+            </div>
+            <div class="banned_block">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="first_cell_up">ID</th>
+                            <th>User</th>
+                            <th>Date</th>
+                            <th>By</th>
+                            <th class="wide_cell">Reason</th>
+                            <th class="last_cell_up">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>200</td>
+                            <td><a class="page_link" href="#">commonuser12</a></td>
+                            <td>17.11.2022 08:13</td>
+                            <td><a class="page_link" href="#">Pretty Username</a></td>
+                            <td>-</td>
+                            <td>
+                                <div class="action"><a class="page_link" href="#">Edit</a></div>
+                                <div class="action"><a class="page_link" href="#">Unban</a></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>201</td>
+                            <td><a class="page_link" href="#">user1242</a></td>
+                            <td>12.11.2022 11:32</td>
+                            <td><a class="page_link" href="#">Pretty Username</a></td>
+                            <td>-</td>
+                            <td>
+                                <div class="action"><a class="page_link" href="#">Edit</a></div>
+                                <div class="action"><a class="page_link" href="#">Unban</a></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- pagination if needed -->
+            <div class="pagination">
+                <div class="pagination_part"><a class="page_link pag" href="?page=">&larr;</a></div>
+                <div class="pagination_part current">2</div>
+                <div class="pagination_part"><a class="page_link pag" href="?page=">&rarr;</a></div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="footer__container">
+        <div class="footer__inner">
+            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi aspernatur autem consequatur dicta, eos
+                error eum hic sapiente unde.</div>
+            <div class="copy">&copy; 4K-Dev, Inc. All rights reserved.</div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
