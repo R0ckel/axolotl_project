@@ -5,6 +5,7 @@
 body {
     height: 100%;
     margin: 0;
+    min-width: 739px;
 }
 #page-container {
     display: flex;
@@ -64,6 +65,12 @@ input{
     justify-content: space-between;
     align-items: center;
 }
+.card__right-left {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 .secondary-head {
     margin: 20px 0 10px;
 }
@@ -116,4 +123,28 @@ td {
 }
 .pag {
     text-decoration: none;
+}
+.find-search{
+    width: 80%;
+    margin: 15px auto 5px;
+}
+.find-search > input, .find-user-btn {
+    width: 80%;
+    border-radius: 30px;
+    padding: 12px 2%;
+    border: 1px solid black;
+    margin: 8px auto;
+    text-align: left;
+}
+.find-search > button, .find-user-btn {
+    width: 14%;
+    border-radius: 30px;
+    margin: 8px auto;
+    border: 1px solid black;
+    padding: 12px 15px;
+}
+.find-user-btn {
+    width: 100% !important;
+    text-align: center;
+    background-color: darkgrey;
 }
