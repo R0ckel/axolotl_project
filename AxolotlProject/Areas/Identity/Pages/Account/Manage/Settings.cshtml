@@ -25,13 +25,15 @@
                         <label for="tab1" class="tab-title">Personal</label>
                         <section class="tab-content">
                             <form method="post">
-                                <input type="text" name="login" placeholder="Your login">
-                                <input type="email" name="email" placeholder="Your email">
-                                <input type="password" name="password" placeholder="Your password" required>
-                                <input type="password" name="repassword" placeholder="Repeat your password" required>
+                                <input asp-for="Input.NewLogin" class="form-control" autocomplete="login" placeholder="Your login" aria-required="false" />
+                                
+                                <input asp-for="Input.OldPassword" class="form-control" autocomplete="current-password" type="password" placeholder="Your old password" aria-required="false" />
+                                <input asp-for="Input.NewPassword" class="form-control" autocomplete="new-password" type="password" placeholder="Your new password" aria-required="false" />
+                                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" type="password" placeholder="Repeat your new password" aria-required="false" />
+
                                 <div class="buttons">
                                     <button class="button" type="submit">Update</button>
-                                    <a class="button" href="#">Return</a>
+                                    <a class="button" href="/">Return</a>
                                 </div>
                             </form>
                         </section>

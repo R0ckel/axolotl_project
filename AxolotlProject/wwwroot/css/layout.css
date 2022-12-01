@@ -31,14 +31,6 @@ button:active, input[type="submit"]:active {
     background-color: #FFF;
 }
 
-input {
-    border-radius: 30px;
-    padding: 12px 2%;
-    border: 1px solid black;
-    margin: 8px auto;
-    width: 96%;
-}
-
 #page-container{
     min-height:100%;
 }

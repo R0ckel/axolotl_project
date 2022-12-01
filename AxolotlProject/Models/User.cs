@@ -14,12 +14,9 @@ public class User : IdentityUser
     [PersonalData]
     public string? Status { get; set; }
 
-    [PersonalData]
-    public bool IsBanned { get; set; }
-
     // [PersonalData]
     // public IFormFile? Icon { get; set; } //need to save user`s icon. File - static class.
-    
+
     [PersonalData]
     public DateTime? BirthDate { get; set; }
 
@@ -44,9 +41,10 @@ public class User : IdentityUser
     [PersonalData]
     public DateTime RegistrationTime { get; set; } = DateTime.Now;
 
+
     public int GetUserRating()
     {
-        if(Posts == null) return 0;
+        if (Posts == null) return 0;
         int rating = 0;
         foreach (var post in Posts)
         {
@@ -58,7 +56,7 @@ public class User : IdentityUser
     public UserPost? FindLastCommentedPost() //COMMENT CREATED property must be added
     {
         if (Posts is null || Posts.Count == 0) return null;
-        UserPost? lastCommented = Posts.FirstOrDefault(p=>p?.Comments?.Count>0, null);
+        UserPost? lastCommented = Posts.FirstOrDefault(p => p?.Comments?.Count > 0, null);
         if (lastCommented == null) return null;
         foreach (var post in Posts)
         {

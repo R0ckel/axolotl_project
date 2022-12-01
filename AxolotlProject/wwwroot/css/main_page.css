@@ -128,6 +128,14 @@ hr {
     padding: 0 5px;
 }
 
+input {
+    border-radius: 30px;
+    padding: 12px 2%;
+    border: 1px solid black;
+    margin: 8px auto;
+    width: 96%;
+}
+
 @media (max-width: 800px) {
     .main-container {
         flex-direction: column;

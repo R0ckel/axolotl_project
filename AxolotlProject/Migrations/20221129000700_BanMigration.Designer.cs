@@ -3,6 +3,7 @@ using System;
 using AxolotlProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,26 +11,23 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AxolotlProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221129000700_BanMigration")]
+    partial class BanMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.9");
 
             modelBuilder.Entity("AxolotlProject.Models.Ban", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Category")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("BanDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("BannerId")
-                        .IsRequired()
+                    b.Property<Guid>("BannerId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("UserId", "Category");
@@ -87,6 +85,19 @@ namespace AxolotlProject.Migrations
                     b.ToTable("CommentsMarks");
                 });
 
+            modelBuilder.Entity("AxolotlProject.Models.Moderator", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("UserId", "Category");
+
+                    b.ToTable("Moderators");
+                });
+
             modelBuilder.Entity("AxolotlProject.Models.PostMark", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -133,6 +144,9 @@ namespace AxolotlProject.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsBanned")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("LockoutEnabled")

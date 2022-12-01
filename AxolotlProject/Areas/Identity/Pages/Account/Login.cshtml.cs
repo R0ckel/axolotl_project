@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using AxolotlProject.Data;
 
 namespace AxolotlProject.Areas.Identity.Pages.Account
 {
@@ -22,11 +23,13 @@ namespace AxolotlProject.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, ApplicationDbContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         /// <summary>
@@ -110,6 +113,9 @@ namespace AxolotlProject.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                var user = _context.Users.FirstOrDefault(u => u.Email.Equals(Input.Email));
+                if(_context.IsUserBanned(user?.Id, PostCategory.All)) 
+                    return Forbid();
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);

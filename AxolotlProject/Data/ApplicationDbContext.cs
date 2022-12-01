@@ -10,9 +10,10 @@ public class ApplicationDbContext : IdentityDbContext<User, Microsoft.AspNetCore
     public DbSet<PostMark>? PostsMarks { get; set; }
     public DbSet<Comment>? Comments { get; set; }
     public DbSet<CommentMark>? CommentsMarks { get; set; }
+    public DbSet<Ban>? Bans { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options) {}
+        : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,7 +26,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Microsoft.AspNetCore
         modelBuilder.Entity<UserPost>()
             .HasMany(post => post.Marks)
             .WithOne(mark => mark.Post);
-        
+
         modelBuilder.Entity<Comment>()
             .HasOne(comment => comment.User)
             .WithMany(user => user.Comments);
@@ -45,6 +46,13 @@ public class ApplicationDbContext : IdentityDbContext<User, Microsoft.AspNetCore
         modelBuilder.Entity<CommentMark>()
             .HasKey(mark => new { mark.UserId, mark.CommentId });
 
+        modelBuilder.Entity<Ban>()
+                .HasKey(ban => new { ban.UserId, ban.Category });
+
         base.OnModelCreating(modelBuilder);
+    }
+
+    public bool IsUserBanned(string id, PostCategory category) {
+        return Bans!.Any(ban => ban.UserId.Equals(id) && ban.Category.Equals(category));
     }
 }

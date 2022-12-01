@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using AxolotlProject.Models;
+using AxolotlProject.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,17 +18,21 @@ namespace AxolotlProject.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly ApplicationDbContext _context;
 
         public ProfileModel(
             UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         public string Username { get; set; }
         public string Description { get; set; }
+        public bool Editable { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -53,29 +58,43 @@ namespace AxolotlProject.Areas.Identity.Pages.Account.Manage
             };
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(string? id = null)
         {
-            var user = await _userManager.GetUserAsync(User);
+            User user;
+            if(id is null)
+                user = await _userManager.GetUserAsync(User);
+            else
+                user = _context.Users.FirstOrDefault(u => u.Id.Equals(id));
             Username = user.UserName;
             Description = user.Description;
+
+            var currentUser = await _userManager.GetUserAsync(User);
+
             if (user == null)
-            {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+
+            Editable = currentUser.Id.Equals(user.Id);
 
             await LoadAsync(user);
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string? id = null)
         {
-            var user = await _userManager.GetUserAsync(User);
+            User user;
+            if(id is null)
+                user = await _userManager.GetUserAsync(User);
+            else
+                user = _context.Users.FirstOrDefault(u => u.Id.Equals(id));
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            if (!ModelState.IsValid)
+            var currentUser = await _userManager.GetUserAsync(User);
+            Editable = currentUser.Id.Equals(user.Id);
+
+            if (!ModelState.IsValid || !Editable)
             {
                 await LoadAsync(user);
                 return Page();
@@ -90,6 +109,7 @@ namespace AxolotlProject.Areas.Identity.Pages.Account.Manage
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
+
             return RedirectToPage();
         }
     }

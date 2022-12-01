@@ -17,11 +17,11 @@
                 </div>
                 <div class="card__right">
                     <div class="right__top">
-                        <div class="user_name">[id: 1209] Pretty Username</div>
-                        <div class="role">category moderator</div>
+											<div class="user_name">[id: @ViewBag.CurrentUser?.Id]<br/>@ViewBag.CurrentUser?.Login</div>
+                        <div class="role">@ViewBag.CurrentUserRole</div>
                     </div>
                     <div class="right__bottom">
-                        <div>Category: Computer Science</div>
+                        <div>Category: @ViewBag.CurrentCategory</div>
                         <div>Warnings: 0</div>
                     </div>
                 </div>
@@ -31,30 +31,65 @@
             <div class="title secondary-head">
                 <span class="header-text">Find User</span>
             </div>
-            <div class="gogomilana"> @*???????????????????????????*@
-                
+            
+            <div class="find-search">
+                <form method="get">
+                    <div style="width: 95%; margin: 15px auto 5px;">
+                        <input type="text" name="login" placeholder="Search" value="@ViewBag.Search" />
+                        <button type="submit">Search</button>
+                    </div>
+                </form>
             </div>
-            <form method="get">
-                <div style="width: 95%; margin: 15px auto 5px;">
-                    <input type="text" name="login" placeholder="Search by name" value="@ViewBag.Search" />
-                    <button type="submit">Search</button>
+            @foreach(var user in Model.searchedUsers) {
+                <div class="card" style="width: 70% !important;">
+                    <div class="card__left">
+                        <img class="card__image" src="../../wwwroot/img/avatar.png" alt="avatar">
+                    </div>
+                    <div class="card__right-left">
+                        <div class="right__top">
+                            <div class="user_name">[id: @user.Id] @user.Login</div>
+                            <div class="role">category user</div>
+                            <div style="margin-top: 20px;">Register date: @user.RegistrationTime</div>
+                            <div>Last online: 15.11.2022 10:30</div>
+                            <div>E-mail: @user.Email</div>
+                            <div>Last post</div>
+                            <div>Last ban: -</div>
+                            <div>Ban history: [<a href="#">link</a>]</div>
+                        </div>
+                        <div class="right__bottom">
+                            <div style="margin-top: 20px;">Category: Computer Science</div>
+                            <div>Warnings: 0</div>
+                        </div>
+                    </div>
+                    <div class="card__right-left" style="margin-left: auto; width: 150px;">
+                        <form class="inner_form" method="post" asp-controller="Admin" asp-action="Ban">
+                            <input type="hidden" name="id" value="@user.Id"/>
+                            <input type="submit" class="find-user-btn" value="Ban">
+                        </form>
+                        <a class="page_link" asp-area="Identity" asp-page="/Account/Manage/Profile" asp-route-id="@user.Id" title="Profile"><button class="find-user-btn">View</button></a>
+                        <button class="find-user-btn">Send message</button>
+                        <button class="find-user-btn">Remove avatar</button>
+                        <button class="find-user-btn">Clean bio</button>
+                    </div>
                 </div>
-            </form>
+            }
             <div class="user-list">
                 <table class="table">
                     <thead>
                         <tr>
-                            @*<th class="first_cell_up">ID</th>*@
+                            <th class="first_cell_up">ID</th>
                             <th>User</th>
                             <th class="last_cell_up" colspan="2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var user in Model.searchedUsers)
+                        @foreach (var user in Model.Users)
                         {
                             <tr>
-                                @*<td>@user.Id</td>*@
-                                <td><a class="page_link" href="#">@user.Login</a></td>
+                                <td>@user.Id</td>
+                                <td><a  class="page_link" asp-area="Identity" asp-page="/Account/Manage/Profile" asp-route-id="@user.Id" title="Profile">
+                                    @user.Login
+                                </a></td>
                                 <td>
                                     <div class="action"><a class="page_link" href="#">Edit</a></div> @*???*@
                                 </td>
@@ -78,21 +113,24 @@
                 <table class="table">
                     <thead>
                         <tr>
-                           @* <th class="first_cell_up">ID</th>*@
+                           <th class="first_cell_up">ID</th>
                             <th>User</th>
-                            @*<th>Date</th>
+                            <th>Date</th>
                             <th>By</th>
-                            <th class="wide_cell">Reason</th>*@     @*TO DO*@
+                            @*<th class="wide_cell">Reason</th>*@     @*TO DO*@
                             <th class="last_cell_up" colspan="2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var user in Model.bannedUsers){
                             <tr>
-                                @*<td>user.Id</td>*@
-                                <td><a class="page_link" href="#">@user.Login</a></td>
-                               @* <td>17.11.2022 08:13</td>
-                                <td><a class="page_link" href="#">Pretty Username</a></td>
+                                <td>@user.Id</td>
+                                <td><a  class="page_link" asp-area="Identity" asp-page="/Account/Manage/Profile" asp-route-id="@user.Id" title="Profile">
+                                    @user.Login
+                                </a>
+                                <td>@ViewBag.BanDates[user.Id]</td>
+                                <td>@ViewBag.BannersNames[user.Id]</td>
+                                @*<td><a class="page_link" href="#">Pretty Username</a></td>
                                 <td>-</td>*@
                                 <td>
                                     <div class="action"><a class="page_link" href="#">Edit</a></div>
@@ -100,7 +138,7 @@
                                 <td>
                                     <div class="action">
                                         <form method="post" asp-controller="Admin" asp-action="UnBan">
-                                            <input type="hidden" name="id" value="@user.Id" />
+                                            <input type="hidden" name="id" value="@user?.Id" />
                                             <input type="submit" value="Unban">
                                         </form>
                                     </div> @*ban user action*@
@@ -112,11 +150,11 @@
             </div>
 
             <!-- pagination if needed -->
-            <div class="pagination">
+            @* <div class="pagination">
                 <div class="pagination_part"><a class="page_link pag" href="?page=">&larr;</a></div>
                 <div class="pagination_part current">2</div>
                 <div class="pagination_part"><a class="page_link pag" href="?page=">&rarr;</a></div>
-            </div>
+            </div> *@
 
         </div>
     </div>

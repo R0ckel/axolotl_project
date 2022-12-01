@@ -2,8 +2,8 @@
 
 public enum PostCategory
 {
-    Cooking, Gaming, Programming, Literature, 
-    Discovery, Engineering, Psychology, Economy, 
+    Cooking, Gaming, Programming, Literature,
+    Discovery, Engineering, Psychology, Economy,
     Science, Shopping, Animals, Plants, Travelling,
-    History, Memes, Speaking
+    History, Memes, Speaking, All
 }

@@ -4,7 +4,7 @@
 @model IEnumerable<AxolotlProject.Models.UserPost>
 
 
-<link rel="stylesheet" href="~/css/main_page.css" />
+<link rel="stylesheet" href="~/css/main_page.css" asp-append-version="true"/>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -116,7 +116,11 @@
                         <div class="posts-block">
                             <div style="padding-top: 15px;"><h2><a asp-action="ShowPost" asp-route-postId="@post.Id">@post.Heading</a></h2></div>
                             <div style="display: inline-block;">@post.CreationTime</div>
-                            <div style="float: right;"><a href="#">@post.User?.Login</a> [ @(post.User?.GetUserRating()??0) <i class="fa-solid fa-thumbs-up reaction"></i> ]</div>
+                            <div style="float: right;">
+                                <a  class="page_link" asp-area="Identity" asp-page="/Account/Manage/Profile" asp-route-id="@post.User?.Id" title="Profile">
+                                    @post.User?.Login
+                                </a> [ @(post.User?.GetUserRating()??0) <i class="fa-solid fa-thumbs-up reaction"></i> ]
+                            </div>
                             <div>
 								@foreach (var tag in post.Tags){
 									<a asp-page="/Index" asp-route-search="@tag" asp-route-tagsSearch="true">@tag</a>

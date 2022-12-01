@@ -21,6 +21,10 @@ namespace AxolotlProject.Controllers
         }
         public async Task<IActionResult> Index(string? search, string? category, int num, bool nameSearch = false, bool authorSearch = false, bool tagsSearch = false, string? addFilt = null)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if(_context.IsUserBanned(user?.Id, PostCategory.All)) 
+                return Forbid();
+
             List<UserPost> result = await _context.UserPosts!.ToListAsync();
             if (category is not null)
                 result = result.Where(post => post.PostCategory!.ToString().Equals(category)).ToList();
@@ -32,7 +36,6 @@ namespace AxolotlProject.Controllers
                     (tagsSearch && post.Tags.Any(t => t.Trim().ToLower().Contains(search.Trim().ToLower()) || search.Trim().ToLower().Contains(t.Trim().Remove(0, 1).ToLower()))))
                 .ToList();
             }
-            var user = await _userManager.GetUserAsync(HttpContext.User);
 
             ViewBag.ViewerId = user?.Id;
             ViewBag.Search = search;
@@ -61,13 +64,16 @@ namespace AxolotlProject.Controllers
             num = num > (result.Count - 1) / postsAmount ? (result.Count - 1) / postsAmount : num;
             int left = num * postsAmount,
                 right = (left + postsAmount) is int r && r < result.Count ? r : result.Count;
-
+            Dictionary<Guid, User?> PostOwners = result.ToDictionary(p => p.Id, p => _context.Users.FirstOrDefault(u => p.UserId.Equals(u.Id)));
             return View(result.ToArray<UserPost>()[left..right]);
         }
 
         [Authorize]
-        public IActionResult CreatePost()
+        public async Task<IActionResult> CreatePost()
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if(_context.IsUserBanned(user?.Id, PostCategory.All)) 
+                return Forbid();
             return View();
         }
 
@@ -77,6 +83,8 @@ namespace AxolotlProject.Controllers
         public async Task<IActionResult> CreatePost([Bind("Id,Heading,Content,PostCategory")] UserPost post)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            if(_context.IsUserBanned(user?.Id, PostCategory.All) || _context.IsUserBanned(user?.Id, post.PostCategory)) 
+                return Forbid();
             if (ModelState.IsValid)
             {
                 post.User = user;
@@ -96,6 +104,8 @@ namespace AxolotlProject.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
             if (id == null || _context.UserPosts == null || post == null)
                 return NotFound();
+            if(_context.IsUserBanned(user?.Id, PostCategory.All) || _context.IsUserBanned(user?.Id, post.PostCategory)) 
+                return Forbid();
             return user.Id == post.UserId ? View(post) : RedirectToAction(nameof(Index));
         }
 
@@ -106,6 +116,8 @@ namespace AxolotlProject.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == id);
+            if(_context.IsUserBanned(user?.Id, PostCategory.All) || _context.IsUserBanned(user?.Id, post!.PostCategory)) 
+                return Forbid();
             if (id != post?.Id) return NotFound();
             if (user.Id == post?.UserId)
             {
@@ -124,6 +136,8 @@ namespace AxolotlProject.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == postId);
+            if(_context.IsUserBanned(user?.Id, PostCategory.All) || _context.IsUserBanned(user?.Id, post.PostCategory)) 
+                return Forbid();
             if (user == null || post == null) return NotFound();
             if (user.Id == post.UserId)
             {
@@ -150,12 +164,14 @@ namespace AxolotlProject.Controllers
             ViewBag.PostOwner = _context.Users?.Find(post.UserId);
             ViewBag.OwnerPostsAmount = _context.UserPosts?.Where(p => p.UserId == post.UserId).Count();
             ViewBag.Comments = _context.Comments?.Where(comment => comment.PostId.Equals(postId)).ToList();
-            var commentsOwners = new Dictionary<Guid, string?>();
+            var commentsOwners = new Dictionary<Guid, User?>();
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            if(_context.IsUserBanned(user?.Id, PostCategory.All) || _context.IsUserBanned(user?.Id, post.PostCategory)) 
+                return Forbid();
             ViewBag.ViewerId = user?.Id;
             foreach (var item in ViewBag.Comments)
             {
-                commentsOwners.Add(item.Id, _context.Users?.Find(item.UserId).Login);
+                commentsOwners.Add(item.Id, _context.Users?.Find(item.UserId));
             }
             ViewBag.CommentsOwners = commentsOwners;
             ViewBag.CommentsRating = _context.Comments?.Where(c => c.PostId.Equals(postId))
@@ -182,6 +198,8 @@ namespace AxolotlProject.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == postId);
             if (user == null || post == null) return NotFound();
+            if(_context.IsUserBanned(user?.Id, PostCategory.All) || _context.IsUserBanned(user?.Id, post.PostCategory)) 
+                return Forbid();
             var comment = new Comment()
             {
                 Id = Guid.NewGuid(),
@@ -212,9 +230,10 @@ namespace AxolotlProject.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var comment = await _context.Comments.FindAsync(id);
             if (comment == null)
-            {
                 return NotFound();
-            }
+            var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == comment.PostId);
+            if(_context.IsUserBanned(user?.Id, PostCategory.All) || _context.IsUserBanned(user?.Id, post.PostCategory)) 
+                return Forbid();
             return user.Id == comment.UserId ? View(comment) : RedirectToAction("ShowPost", new { postId = comment.PostId });
         }
 
@@ -226,6 +245,9 @@ namespace AxolotlProject.Controllers
             var comment = await _context.Comments!.FirstOrDefaultAsync(p => p.Id == id);
             var user = await _userManager.GetUserAsync(HttpContext.User);
             if (comment == null) return NotFound();
+            var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == comment.PostId);
+            if(_context.IsUserBanned(user?.Id, PostCategory.All) || _context.IsUserBanned(user?.Id, post.PostCategory)) 
+                return Forbid();
             if (user.Id == comment.UserId)
             {
                 comment.Content = Content;
@@ -248,6 +270,9 @@ namespace AxolotlProject.Controllers
                 comment.DeleteSelf();
                 await _context.SaveChangesAsync();
             }
+            var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == comment.PostId);
+            if(_context.IsUserBanned(user?.Id, PostCategory.All) || _context.IsUserBanned(user?.Id, post.PostCategory)) 
+                return Forbid();
             return RedirectToAction("ShowPost", new { postId = postId });
         }
 
@@ -259,6 +284,9 @@ namespace AxolotlProject.Controllers
             var comment = await _context.Comments!.FirstOrDefaultAsync(p => p.Id == commentId);
             var marks = _context.CommentsMarks;
             if (user == null || comment == null) return NotFound();
+            var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == comment.PostId);
+            if(_context.IsUserBanned(user?.Id, PostCategory.All) || _context.IsUserBanned(user?.Id, post.PostCategory)) 
+                return Forbid();
             if (marks?.FirstOrDefault(m => m.UserId.Equals(Guid.Parse(user.Id)) && m.CommentId.Equals(comment.Id)) is var currentMark
                     && currentMark is not null
                     && !currentMark.Equals(default(CommentMark)))
@@ -300,6 +328,8 @@ namespace AxolotlProject.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var post = await _context.UserPosts!.FirstOrDefaultAsync(p => p.Id == postId);
+            if(_context.IsUserBanned(user?.Id, PostCategory.All) || _context.IsUserBanned(user?.Id, post.PostCategory)) 
+                return Forbid();
             var marks = _context.PostsMarks;
             if (user == null || post == null) return NotFound();
             if (marks?.FirstOrDefault(m => m.UserId.Equals(Guid.Parse(user.Id)) && m.PostId.Equals(post.Id)) is var currentMark

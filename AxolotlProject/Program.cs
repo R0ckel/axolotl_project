@@ -49,4 +49,16 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<User>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    await AxolotlProject.Seeds.RoleSeed.SeedAsync(roleManager);
+    await AxolotlProject.Seeds.UserSeed.SeedUserAsync(userManager);
+    await AxolotlProject.Seeds.UserSeed.SeedAdministratorAsync(userManager, roleManager);
+    await AxolotlProject.Seeds.UserSeed.SeedModeratorAsync(userManager, roleManager);
+    Console.WriteLine(AxolotlProject.Seeds.RoleSeed.AdminAndModersList);
+}
+
 app.Run();

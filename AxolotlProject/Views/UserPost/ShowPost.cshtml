@@ -60,7 +60,9 @@
                             @foreach (var comment in ViewBag.Comments){
                                 <div class="commentBlock">
                                     <div class="comment-content">
-                                        <h3>@ViewBag.CommentsOwners[comment.Id]</h3>
+                                        <h3><a  class="page_link" asp-area="Identity" asp-page="/Account/Manage/Profile" asp-route-id="@ViewBag.CommentsOwners[comment.Id].Id" title="Profile">
+                                    @ViewBag.CommentsOwners[comment.Id].Login
+                                </a></h3>
 																				@comment.CreationTime<br/>
                                         @comment.Content
                                     </div>
@@ -100,7 +102,7 @@
                     <span class="header-text">Author</span>
                 </div>
                 <hr>
-                <h2>@ViewBag.PostOwner?.Login</h2>
+                <h2><a  class="page_link" asp-area="Identity" asp-page="/Account/Manage/Profile" asp-route-id="@ViewBag.PostOwner?.Id" title="Profile">@ViewBag.PostOwner?.Login</a></h2>
                 Has @ViewBag.OwnerPostsAmount post(s)
             </div>
             <div class="right__container-category">

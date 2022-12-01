@@ -12,21 +12,27 @@
         <span class="heading-big">Axolotl's Answers</span><br />
         <span class="heading-medium">Social question-and-answer website</span>
     </div>
-    <div class="main-grid__item2">
+    
+    <div class="main-grid__item2"> 
         <div class="username header2">
             <span class="user-login">@Model.Username</span>
         </div>
-        <div class="avatar_note__block">
+        @{
+            string av_style = Model.Editable ? "" : @"justify-content: center;";
+        }
+        <div class="avatar_note__block" style="@av_style">
             <div class="avatar__block">
                 <img src="~/img/avatar.png" alt="avatar" class="avatar__image"/>
             </div>
-            <div class="note__block">
-                <form id="profile-form" method="post">
-                    <textarea asp-for="Input.Description" class="form-control" id="notes" placeholder="Note any information here"
-                                rows="10" cols="50"></textarea>
-                    <button id="update-profile-button" type="submit">Save</button>
-                </form>
-            </div>
+            @if(Model.Editable) {
+                <div class="note__block">
+                    <form id="profile-form" method="post">
+                        <textarea asp-for="Input.Description" class="form-control" id="notes" placeholder="Note any information here"
+                                    rows="10" cols="50"></textarea>
+                        <button id="update-profile-button" type="submit">Save</button>
+                    </form>
+                </div>
+            }
         </div>
         <div class="user-information">
             <div class="userdb__information">
